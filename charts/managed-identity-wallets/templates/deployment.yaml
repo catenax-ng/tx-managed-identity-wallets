@@ -19,7 +19,7 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.image.secret }}
       containers:
-      - name: catenax-managed-identity-wallets
+      - name: managed-identity-wallets
         {{- if .Values.image.registry }}
         image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ default .Chart.AppVersion .Values.image.tag }}
         {{- else }}
@@ -119,7 +119,7 @@ spec:
             memory: 256Mi
         ports:
         - containerPort: 8080
-      - name: catenax-revocation-service
+      - name: revocation-service
         image: {{ .Values.revocationService.imageName }}:{{ .Values.revocationService.tag }}
         imagePullPolicy: Always
         env:
@@ -147,7 +147,7 @@ spec:
             memory: 256Mi
         ports:
         - containerPort: 8086
-      - name: catenax-endorser-acapy
+      - name: endorser-acapy
         image: {{ .Values.acapy.imageName }}:{{ .Values.acapy.tag }}
         env:
         - name: WALLET_KEY
@@ -224,7 +224,7 @@ spec:
           --inbound-transport http '0.0.0.0' $(ACAPY_ENDPOINT_PORT) \
           --outbound-transport http \
           --admin '0.0.0.0' $(ACAPY_ADMIN_PORT) \
-          --wallet-name AcapyCatenaXEndorserWallet \
+          --wallet-name AcapyBaseEndorserWallet \
           --wallet-type askar \
           --wallet-key $(WALLET_KEY) \
           --wallet-storage-type postgres_storage
@@ -241,7 +241,7 @@ spec:
           --auto-endorse-transactions \
           --log-level $(LOG_LEVEL)"
         ]
-      - name: catenax-mt-acapy
+      - name: mt-acapy
         image: {{ .Values.acapy.imageName }}:{{ .Values.acapy.tag }}
         env:
         - name: WALLET_KEY
@@ -322,7 +322,7 @@ spec:
           --inbound-transport http '0.0.0.0' $(ACAPY_ENDPOINT_PORT) \
           --outbound-transport http \
           --admin '0.0.0.0' $(ACAPY_ADMIN_PORT) \
-          --wallet-name AcapyCatenaXManagedWallet \
+          --wallet-name AcapyMTManagedWallet \
           --wallet-type askar \
           --wallet-key $(WALLET_KEY) \
           --wallet-storage-type postgres_storage

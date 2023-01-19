@@ -18,7 +18,7 @@ wallet:
   baseWalletBpn: "BPNL000000000000"
   baseWalletShortDid: "MhLrwtKpZhNCzazMeofPQH"
   baseWalletVerkey: "CHEC4PRQmP73A9UD7vQ6tnLAm9aoXLPhEtnGSMiAyVZj"
-  baseWalletName: "Catena-X"
+  baseWalletName: "Base-Wallet"
 revocation:
   refreshHour: "3"
   revocationServiceUrl: http://localhost:8086
@@ -36,7 +36,7 @@ acapy:
   # AcaPy endorser instance
   endorser:
     ledgerUrl: "https://idu.cloudcompass.ca"
-    label: "CatenaXIssuer"
+    label: "Base-Wallet"
     logLevel: "INFO"
     networkIdentifier: "idunion:test"
     databaseHost: "acapypostgresql"
@@ -55,7 +55,7 @@ acapy:
   # AcaPy multi-tenancy instance
   mt:
     ledgerUrl: "https://idu.cloudcompass.ca"
-    label: "CatenaXIssuer"
+    label: "Managed-Wallets"
     logLevel: "INFO"
     networkIdentifier: "idunion:test"
     databaseHost: "acapypostgresql"
