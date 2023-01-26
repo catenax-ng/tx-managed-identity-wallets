@@ -1,9 +1,9 @@
 # Setup Aca-Py on a Cloud VM Infrastructure
 
-The following steps describe how to set up an Aca-Py agent with nginx:
+The following steps describe how to set up an Aca-Py agent with nginx on EC2 instance. However, those steps should be similar on other Cloud VM Infrastructure like (VM or EC):
 
-- Login into your favirote Cloud provider
-- Create a new EC2 or VM or EC instance
+- Log in to the EC2 instance provider
+- Create a new EC2 instance
   - ubuntu 22.04
   - name e.x. Acapy_External
   - 1 CPU & 1 GiB RAM
