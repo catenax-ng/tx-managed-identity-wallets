@@ -1,80 +1,124 @@
+# The IAM Configuration
 auth:
+  # -- (string) The realm name in Keycloak
   realm: "CX-Central"
+  # -- (string) the main role in MIW
   role: "add_wallets"
+  # -- (string) role mapping in MIW
   roleMappings: "create_wallets:add_wallets,view_wallets:view_wallets,update_wallets:update_wallets,delete_wallets:delete_wallets,view_wallet:view_wallet,update_wallet:update_wallet"
+  # -- (string) The resource Id in Keycloak
   resourceId: "Cl5-CX-Custodian"
+# The Image of the Managed IdentityIdeneity Wallets
 image:
   name: "catenax-ng/tx-managed-identity-wallets_service"
   registry: "ghcr.io"
+  # -- Overrides the image tag whose default is the chart appVersion
   tag: ""
   secret: "acr-credentials"
 allowEmptyPassword: "\"yes\""
 db:
+  # -- Database driver to use
   jdbcDriver: "org.postgresql.Driver"
 namespace: "managed-identity-wallets"
 logging:
   exposed: "INFO"
+# The Base Wallet configuration in MIW
 wallet:
-  baseWalletBpn: "BPNLxxxxxxxxxx"
-  baseWalletShortDid: "ShortDIDPlaceholderX"
-  baseWalletVerkey: "VERKEYPlaceholderX"
-  baseWalletName: "Catena-X"
+  # -- The BPN of the Base Wallet
+  baseWalletBpn: ""
+  # -- The short DID of the Base Wallet. Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger
+  baseWalletShortDid: ""
+  # -- The Verkey (public-key) of the Base Wallet.
+  baseWalletVerkey: ""
+  # -- The name of the Base Wallet
+  baseWalletName: ""
+# The configuration of revocation service in MIW
 revocation:
+  # --  At which hour (24-hour clock) the cron job should issue/update status-list credentials
   refreshHour: "3"
+  # -- The URL of the revocation service
   revocationServiceUrl: http://localhost:8086
+# The main configration of the Revocation Service 
 revocationService:
   imageName: "registry.gitlab.com/gaia-x/data-infrastructure-federation-services/not/notarization-service/revocation"
   tag: "1.0.0-SNAPSHOT-quarkus-2.10.2.Final-java17"
   port: "8086"
   httpAccessLog: true
+  # -- Issuance cache interval
   minIssueInterval: "2"
+  # -- The the endpoint in MIW at which status credentials can be issued 
   baseUrlForCredentialList: "https//localhost:8080/api/credentials/"
+  # -- The URL at which the MIW is reachable
   clientIssuanceApiUrl: "http://localhost:8080"
 acapy:
   imageName: "bcgovimages/aries-cloudagent"
   tag: "py36-1.16-1_0.7.5"
-  # AcaPy endorser instance
+  # The configuration of the AcaPy endorser instance
   endorser:
+    # -- The URl of the used indyLedger
     ledgerUrl: "https://idu.cloudcompass.ca"
+    # -- The label of the instance
     label: "CatenaXIssuer"
     logLevel: "INFO"
+    # -- The network identifier of the used ledger
     networkIdentifier: "idunion:test"
+    # -- The host of the used Database
     databaseHost: "acapypostgresql"
+    # -- The Port at which the wallet is reachable
     endpointPort: "8000"
+    # -- The Port at which the admin api is reachable
     adminPort: "11000"
+    # -- The URL of the admin api
     adminUrl: "http://localhost:11000"
     secret:
+      # -- The API-Key of the admin endpoints. A random and secure String
       apikey: "0"
+      # -- The Seed of the Wallet. Must be Random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers)
       walletseed: "0"
       dbaccount: "postgres"
       dbadminuser: "postgres"
       dbadminpassword: "postgres"
       dbpassword: "postgres"
+      ## -- It must be a random and secure String
       jwtsecret: "0"
+      ## -- It must be a random and secure String
       walletkey: "0"
   # AcaPy multi-tenancy instance
   mt:
+    # -- The URl of the used indyLedger. Must equal acapy.endorser.ledgerUrl
     ledgerUrl: "https://idu.cloudcompass.ca"
+    # -- The label of the instance
     label: "CatenaXIssuer"
     logLevel: "INFO"
+    # -- The network identifier of the used ledger. Must equal acapy.endorser.networkIdentifier
     networkIdentifier: "idunion:test"
     databaseHost: "acapypostgresql"
+    # -- The Port at which the sub-wallets are reachable
     endpointPort: "8003"
+    # -- The Port at which the admin api is reachable
     adminPort: "11003"
+    # -- The URL of the admin api
     adminUrl: "http://localhost:11003"
+    # -- The Short DID of the Base Wallet
     endorserPublicDid: "ShortDIDPlaceholderX"
+    # -- The url at which events are sent. it should be the Endpoint in MIW
     webhookUrl: "http://localhost:8080/webhook"
     secret:
+      # -- The API-Key of the admin endpoints. A random and secure String
       apikey: "0"
+      # -- The Seed of the Wallet. Must be Random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers)
       walletseed: "0"
       dbaccount: "postgres"
       dbadminuser: "postgres"
       dbadminpassword: "postgres"
       dbpassword: "postgres"
+      ## -- It must be a random and secure String
       jwtsecret: "0"
+      ## -- It must be a random and secure String
       walletkey: "0"
 ingress:
   enabled: false
+# Configurationa and secrets of the Database that is used by AcaPy
 acapypostgresql:
   enabled: true
   auth:
@@ -83,6 +127,7 @@ acapypostgresql:
     password: "postgres"
     postgrespassword: "postgres"
     user: "postgres"
+# Configurationa and secrets of the Database that is used by the MIW
 postgresql:
   enabled: true
   auth:
@@ -96,6 +141,7 @@ postgresql:
         emptyDir: {}
     initContainers:
       - name: initdb
+        # -- The image is built and used to initialize the Database of MIW. The tag must equal the appVersion in Chart.yaml
         image: ghcr.io/catenax-ng/tx-managed-identity-wallets_initdb:3.0.0
         imagePullPolicy: Always
         command:
@@ -112,19 +158,29 @@ postgresql:
     password: "postgres"
     postgrespassword: "postgres"
     user: "postgres"
+# The configuration to access the BPDM data pool (https://github.com/eclipse-tractusx/bpdm) from MIW
 datapool:
   grantType: "client_credentials"
   scope: "openid"
+  # -- At which hour (24-hour clock) the cron job should pull the data from the BPDM data pool
   refreshHour: "23"
+  # -- Url at which the API of BPDM is reachable
   url: ""
+  # -- IAM url to get the access token for BPDM data pool endpoint
   authUrl: ""
 managedIdentityWallets:
   secret:
+    # -- Database connection string to the Postgres Database of MIW
     jdbcurl: "jdbc:postgresql://postgresql:5432/postgres?user=postgres&password=postgres"
+    # -- It can be extracted from keycloak
     authclientid: "clientid"
+    # -- It can be extracted from keycloak
     authclientsecret: "client"
+    # -- client id for accessing the BPDM data pool endpoint
     bpdmauthclientid: "clientid"
+    # -- client secret for accessing the BPDM data pool endpoint
     bpdmauthclientsecret: "client"
 certificate:
   host: "localhost"
+# -- Deployment on kubernetes on local device
 isLocal: false
