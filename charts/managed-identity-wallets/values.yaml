@@ -8,7 +8,7 @@ auth:
   roleMappings: "create_wallets:add_wallets,view_wallets:view_wallets,update_wallets:update_wallets,delete_wallets:delete_wallets,view_wallet:view_wallet,update_wallet:update_wallet"
   # -- (string) The resource Id in Keycloak
   resourceId: "Cl5-CX-Custodian"
-# The Image of the Managed IdentityIdeneity Wallets
+# The Image of the Managed Identity Wallets
 image:
   name: "catenax-ng/tx-managed-identity-wallets_service"
   registry: "ghcr.io"
@@ -38,7 +38,7 @@ revocation:
   refreshHour: "3"
   # -- The URL of the revocation service
   revocationServiceUrl: http://localhost:8086
-# The main configration of the Revocation Service
+# The main configuration of the Revocation Service
 revocationService:
   imageName: "registry.gitlab.com/gaia-x/data-infrastructure-federation-services/not/notarization-service/revocation"
   tag: "1.0.0-SNAPSHOT-quarkus-2.10.2.Final-java17"
@@ -118,7 +118,7 @@ acapy:
       walletkey: "0"
 ingress:
   enabled: false
-# Configurationa and secrets of the Database that is used by AcaPy
+# Configuration and secrets of the Database that is used by AcaPy
 acapypostgresql:
   enabled: true
   auth:
@@ -127,7 +127,7 @@ acapypostgresql:
     password: "postgres"
     postgrespassword: "postgres"
     user: "postgres"
-# Configurationa and secrets of the Database that is used by the MIW
+# Configuration and secrets of the Database that is used by the MIW
 postgresql:
   enabled: true
   auth:
