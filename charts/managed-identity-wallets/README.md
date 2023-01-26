@@ -28,8 +28,8 @@ Managed Identity Wallets Service
 | namespace | string | `"managed-identity-wallets"` |  |
 | logging.exposed | string | `"INFO"` |  |
 | wallet.baseWalletBpn | string | `""` | The BPN of the base wallet |
-| wallet.baseWalletShortDid | string | `""` | The short DID of the base wallet.  It Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger. It should be registiered on the indy ledger with role endorser. |
-| wallet.baseWalletVerkey | string | `""` | The Verkey (public-key) of the base wallet |
+| wallet.baseWalletShortDid | string | `""` | The short DID of the base wallet. It can be created with its verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger. It should be registered on the Indy ledger with role endorser. |
+| wallet.baseWalletVerkey | string | `""` | The verkey (public key) of the base wallet |
 | wallet.baseWalletName | string | `""` | The name of the base wallet |
 | revocation.refreshHour | string | `"3"` | At which hour (24-hour clock) the cron job should issue/update status-list credentials |
 | revocation.revocationServiceUrl | string | `"http://localhost:8086"` | The url of the revocation service |
@@ -42,34 +42,34 @@ Managed Identity Wallets Service
 | revocationService.clientIssuanceApiUrl | string | `"http://localhost:8080"` | The url at which the MIW is reachable |
 | acapy.imageName | string | `"bcgovimages/aries-cloudagent"` |  |
 | acapy.tag | string | `"py36-1.16-1_0.7.5"` |  |
-| acapy.endorser.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The url of the used indy ledger |
+| acapy.endorser.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The url of the used Indy ledger |
 | acapy.endorser.label | string | `"CatenaXIssuer"` | The label of the instance |
 | acapy.endorser.logLevel | string | `"INFO"` |  |
-| acapy.endorser.networkIdentifier | string | `"idunion:test"` | The network identifier of the used indy ledger |
+| acapy.endorser.networkIdentifier | string | `"idunion:test"` | The network identifier of the used Indy ledger |
 | acapy.endorser.databaseHost | string | `"acapypostgresql"` | The host of the used database |
 | acapy.endorser.endpointPort | string | `"8000"` | The port at which the wallet is reachable |
-| acapy.endorser.adminPort | string | `"11000"` | The port at which the admin api is reachable |
-| acapy.endorser.adminUrl | string | `"http://localhost:11000"` | The url of the admin api |
-| acapy.endorser.secret.apikey | string | `"0"` | The API-Key of the admin endpoints. It must be a random and secure String |
-| acapy.endorser.secret.walletseed | string | `"0"` | The seed of the wallet. It must be random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers) |
+| acapy.endorser.adminPort | string | `"11000"` | The port at which the admin API is reachable |
+| acapy.endorser.adminUrl | string | `"http://localhost:11000"` | The url of the admin API |
+| acapy.endorser.secret.apikey | string | `"0"` | The API key of the admin endpoints. It must be a random and secure string |
+| acapy.endorser.secret.walletseed | string | `"0"` | The seed of the wallet. It must be random and secure (no patterns or use of dictionary words, the use of uppercase and lowercase letters - as well as numbers and allowed symbols, no personal preferences like names or phone numbers) |
 | acapy.endorser.secret.dbaccount | string | `"postgres"` |  |
 | acapy.endorser.secret.dbadminuser | string | `"postgres"` |  |
 | acapy.endorser.secret.dbadminpassword | string | `"postgres"` |  |
 | acapy.endorser.secret.dbpassword | string | `"postgres"` |  |
 | acapy.endorser.secret.jwtsecret | string | `"0"` |  |
 | acapy.endorser.secret.walletkey | string | `"0"` |  |
-| acapy.mt.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The url of the used indy ledger |
+| acapy.mt.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The url of the used Indy ledger |
 | acapy.mt.label | string | `"CatenaXIssuer"` | The label of the instance |
 | acapy.mt.logLevel | string | `"INFO"` |  |
-| acapy.mt.networkIdentifier | string | `"idunion:test"` | The network identifier of the used indy ledger |
+| acapy.mt.networkIdentifier | string | `"idunion:test"` | The network identifier of the used Indy ledger |
 | acapy.mt.databaseHost | string | `"acapypostgresql"` |  |
 | acapy.mt.endpointPort | string | `"8003"` | The port at which the sub-wallets are reachable |
-| acapy.mt.adminPort | string | `"11003"` | The port at which the admin api is reachable |
-| acapy.mt.adminUrl | string | `"http://localhost:11003"` | The url of the admin api |
+| acapy.mt.adminPort | string | `"11003"` | The port at which the admin API is reachable |
+| acapy.mt.adminUrl | string | `"http://localhost:11003"` | The url of the admin API |
 | acapy.mt.endorserPublicDid | string | `"ShortDIDPlaceholderX"` | The short DID of the base wallet |
 | acapy.mt.webhookUrl | string | `"http://localhost:8080/webhook"` | The url at which events are sent. It should be the webhook endpoint in MIW |
-| acapy.mt.secret.apikey | string | `"0"` | The API-Key of the admin endpoints. It must be a random and secure String |
-| acapy.mt.secret.walletseed | string | `"0"` | The seed of the wallet. It must be random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers) |
+| acapy.mt.secret.apikey | string | `"0"` | The API-Key of the admin endpoints. It must be a random and secure string |
+| acapy.mt.secret.walletseed | string | `"0"` | The seed of the wallet. It must be random and secure (no patterns or use of dictionary words, the use of uppercase and lowercase letters - as well as numbers and allowed symbols, no personal preferences like names or phone numbers) |
 | acapy.mt.secret.dbaccount | string | `"postgres"` |  |
 | acapy.mt.secret.dbadminuser | string | `"postgres"` |  |
 | acapy.mt.secret.dbadminpassword | string | `"postgres"` |  |
