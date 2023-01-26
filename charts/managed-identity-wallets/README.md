@@ -16,8 +16,8 @@ Managed Identity Wallets Service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | auth.realm | string | `"CX-Central"` | The realm name in Keycloak |
-| auth.role | string | `"add_wallets"` | the main role in MIW |
-| auth.roleMappings | string | `"create_wallets:add_wallets,view_wallets:view_wallets,update_wallets:update_wallets,delete_wallets:delete_wallets,view_wallet:view_wallet,update_wallet:update_wallet"` | role mapping in MIW |
+| auth.role | string | `"add_wallets"` | The main role in MIW |
+| auth.roleMappings | string | `"create_wallets:add_wallets,view_wallets:view_wallets,update_wallets:update_wallets,delete_wallets:delete_wallets,view_wallet:view_wallet,update_wallet:update_wallet"` | The role mapping in MIW |
 | auth.resourceId | string | `"Cl5-CX-Custodian"` | The resource Id in Keycloak |
 | image.name | string | `"catenax-ng/tx-managed-identity-wallets_service"` |  |
 | image.registry | string | `"ghcr.io"` |  |
@@ -27,10 +27,10 @@ Managed Identity Wallets Service
 | db.jdbcDriver | string | `"org.postgresql.Driver"` | Database driver to use |
 | namespace | string | `"managed-identity-wallets"` |  |
 | logging.exposed | string | `"INFO"` |  |
-| wallet.baseWalletBpn | string | `""` | The BPN of the Base Wallet |
-| wallet.baseWalletShortDid | string | `""` | The short DID of the Base Wallet.  It Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger. It should be registiered on the indy Ledger with role endorser. |
-| wallet.baseWalletVerkey | string | `""` | The Verkey (public-key) of the Base Wallet |
-| wallet.baseWalletName | string | `""` | The name of the Base Wallet |
+| wallet.baseWalletBpn | string | `""` | The BPN of the base wallet |
+| wallet.baseWalletShortDid | string | `""` | The short DID of the base wallet.  It Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger. It should be registiered on the indy ledger with role endorser. |
+| wallet.baseWalletVerkey | string | `""` | The Verkey (public-key) of the base wallet |
+| wallet.baseWalletName | string | `""` | The name of the base wallet |
 | revocation.refreshHour | string | `"3"` | At which hour (24-hour clock) the cron job should issue/update status-list credentials |
 | revocation.revocationServiceUrl | string | `"http://localhost:8086"` | The url of the revocation service |
 | revocationService.imageName | string | `"registry.gitlab.com/gaia-x/data-infrastructure-federation-services/not/notarization-service/revocation"` |  |
@@ -42,34 +42,34 @@ Managed Identity Wallets Service
 | revocationService.clientIssuanceApiUrl | string | `"http://localhost:8080"` | The url at which the MIW is reachable |
 | acapy.imageName | string | `"bcgovimages/aries-cloudagent"` |  |
 | acapy.tag | string | `"py36-1.16-1_0.7.5"` |  |
-| acapy.endorser.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The url of the used indyLedger |
+| acapy.endorser.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The url of the used indy ledger |
 | acapy.endorser.label | string | `"CatenaXIssuer"` | The label of the instance |
 | acapy.endorser.logLevel | string | `"INFO"` |  |
 | acapy.endorser.networkIdentifier | string | `"idunion:test"` | The network identifier of the used indy ledger |
-| acapy.endorser.databaseHost | string | `"acapypostgresql"` | The host of the used Database |
-| acapy.endorser.endpointPort | string | `"8000"` | The Port at which the wallet is reachable |
-| acapy.endorser.adminPort | string | `"11000"` | The Port at which the admin api is reachable |
+| acapy.endorser.databaseHost | string | `"acapypostgresql"` | The host of the used database |
+| acapy.endorser.endpointPort | string | `"8000"` | The port at which the wallet is reachable |
+| acapy.endorser.adminPort | string | `"11000"` | The port at which the admin api is reachable |
 | acapy.endorser.adminUrl | string | `"http://localhost:11000"` | The url of the admin api |
-| acapy.endorser.secret.apikey | string | `"0"` | The API-Key of the admin endpoints. A random and secure String |
-| acapy.endorser.secret.walletseed | string | `"0"` | The Seed of the Wallet. Must be Random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers) |
+| acapy.endorser.secret.apikey | string | `"0"` | The API-Key of the admin endpoints. It must be a random and secure String |
+| acapy.endorser.secret.walletseed | string | `"0"` | The seed of the wallet. It must be random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers) |
 | acapy.endorser.secret.dbaccount | string | `"postgres"` |  |
 | acapy.endorser.secret.dbadminuser | string | `"postgres"` |  |
 | acapy.endorser.secret.dbadminpassword | string | `"postgres"` |  |
 | acapy.endorser.secret.dbpassword | string | `"postgres"` |  |
 | acapy.endorser.secret.jwtsecret | string | `"0"` |  |
 | acapy.endorser.secret.walletkey | string | `"0"` |  |
-| acapy.mt.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The url of the used indyLedger |
+| acapy.mt.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The url of the used indy ledger |
 | acapy.mt.label | string | `"CatenaXIssuer"` | The label of the instance |
 | acapy.mt.logLevel | string | `"INFO"` |  |
 | acapy.mt.networkIdentifier | string | `"idunion:test"` | The network identifier of the used indy ledger |
 | acapy.mt.databaseHost | string | `"acapypostgresql"` |  |
-| acapy.mt.endpointPort | string | `"8003"` | The Port at which the sub-wallets are reachable |
-| acapy.mt.adminPort | string | `"11003"` | The Port at which the admin api is reachable |
+| acapy.mt.endpointPort | string | `"8003"` | The port at which the sub-wallets are reachable |
+| acapy.mt.adminPort | string | `"11003"` | The port at which the admin api is reachable |
 | acapy.mt.adminUrl | string | `"http://localhost:11003"` | The url of the admin api |
-| acapy.mt.endorserPublicDid | string | `"ShortDIDPlaceholderX"` | The Short DID of the Base Wallet |
+| acapy.mt.endorserPublicDid | string | `"ShortDIDPlaceholderX"` | The short DID of the base wallet |
 | acapy.mt.webhookUrl | string | `"http://localhost:8080/webhook"` | The url at which events are sent. It should be the webhook endpoint in MIW |
-| acapy.mt.secret.apikey | string | `"0"` | The API-Key of the admin endpoints. A random and secure String |
-| acapy.mt.secret.walletseed | string | `"0"` | The Seed of the Wallet. Must be Random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers) |
+| acapy.mt.secret.apikey | string | `"0"` | The API-Key of the admin endpoints. It must be a random and secure String |
+| acapy.mt.secret.walletseed | string | `"0"` | The seed of the wallet. It must be random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers) |
 | acapy.mt.secret.dbaccount | string | `"postgres"` |  |
 | acapy.mt.secret.dbadminuser | string | `"postgres"` |  |
 | acapy.mt.secret.dbadminpassword | string | `"postgres"` |  |
@@ -89,7 +89,7 @@ Managed Identity Wallets Service
 | postgresql.primary.extraVolumes[0].name | string | `"initdb"` |  |
 | postgresql.primary.extraVolumes[0].emptyDir | object | `{}` |  |
 | postgresql.primary.initContainers[0].name | string | `"initdb"` |  |
-| postgresql.primary.initContainers[0].image | string | `"ghcr.io/catenax-ng/tx-managed-identity-wallets_initdb:3.0.0"` | The image is built and used to initialize the Database of MIW. The tag must equal the appVersion in Chart.yaml |
+| postgresql.primary.initContainers[0].image | string | `"ghcr.io/catenax-ng/tx-managed-identity-wallets_initdb:3.0.0"` | The image is built and used to initialize the database of MIW. The tag must equal the appVersion in Chart.yaml |
 | postgresql.primary.initContainers[0].imagePullPolicy | string | `"Always"` |  |
 | postgresql.primary.initContainers[0].command[0] | string | `"sh"` |  |
 | postgresql.primary.initContainers[0].args[0] | string | `"-c"` |  |
@@ -104,9 +104,9 @@ Managed Identity Wallets Service
 | datapool.refreshHour | string | `"23"` | At which hour (24-hour clock) the cron job should pull the data from the BPDM data pool |
 | datapool.url | string | `""` | Url at which the API of BPDM is reachable |
 | datapool.authUrl | string | `""` | IAM url to get the access token for BPDM data pool endpoint |
-| managedIdentityWallets.secret.jdbcurl | string | `"jdbc:postgresql://postgresql:5432/postgres?user=postgres&password=postgres"` | Database connection string to the Postgres Database of MIW |
-| managedIdentityWallets.secret.authclientid | string | `"clientid"` | It can be extracted from keycloak |
-| managedIdentityWallets.secret.authclientsecret | string | `"client"` | It can be extracted from keycloak |
+| managedIdentityWallets.secret.jdbcurl | string | `"jdbc:postgresql://postgresql:5432/postgres?user=postgres&password=postgres"` | Database connection string to the Postgres database of MIW |
+| managedIdentityWallets.secret.authclientid | string | `"clientid"` | It can be extracted from Keycloak |
+| managedIdentityWallets.secret.authclientsecret | string | `"client"` | It can be extracted from Keycloak |
 | managedIdentityWallets.secret.bpdmauthclientid | string | `"clientid"` | client id for accessing the BPDM data pool endpoint |
 | managedIdentityWallets.secret.bpdmauthclientsecret | string | `"client"` | client secret for accessing the BPDM data pool endpoint |
 | certificate.host | string | `"localhost"` |  |

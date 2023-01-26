@@ -1,14 +1,14 @@
-# The IAM Configuration
+# The IAM configuration
 auth:
   # -- (string) The realm name in Keycloak
   realm: "CX-Central"
-  # -- (string) the main role in MIW
+  # -- (string) The main role in MIW
   role: "add_wallets"
-  # -- (string) role mapping in MIW
+  # -- (string) The role mapping in MIW
   roleMappings: "create_wallets:add_wallets,view_wallets:view_wallets,update_wallets:update_wallets,delete_wallets:delete_wallets,view_wallet:view_wallet,update_wallet:update_wallet"
   # -- (string) The resource Id in Keycloak
   resourceId: "Cl5-CX-Custodian"
-# The Image of the Managed Identity Wallets
+# The image of the Managed Identity Wallets
 image:
   name: "catenax-ng/tx-managed-identity-wallets_service"
   registry: "ghcr.io"
@@ -22,17 +22,17 @@ db:
 namespace: "managed-identity-wallets"
 logging:
   exposed: "INFO"
-# The Base Wallet configuration in MIW
+# The base wallet configuration in MIW
 wallet:
-  # -- The BPN of the Base Wallet
+  # -- The BPN of the base wallet
   baseWalletBpn: ""
-  # -- The short DID of the Base Wallet. 
+  # -- The short DID of the base wallet. 
   # It Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger.
-  # It should be registiered on the indy Ledger with role endorser.
+  # It should be registiered on the indy ledger with role endorser.
   baseWalletShortDid: ""
-  # -- The Verkey (public-key) of the Base Wallet
+  # -- The Verkey (public-key) of the base wallet
   baseWalletVerkey: ""
-  # -- The name of the Base Wallet
+  # -- The name of the base wallet
   baseWalletName: ""
 # The configuration of revocation service in MIW
 revocation:
@@ -40,7 +40,7 @@ revocation:
   refreshHour: "3"
   # -- The url of the revocation service
   revocationServiceUrl: http://localhost:8086
-# The main configuration of the Revocation Service
+# The main configuration of the revocation service
 revocationService:
   imageName: "registry.gitlab.com/gaia-x/data-infrastructure-federation-services/not/notarization-service/revocation"
   tag: "1.0.0-SNAPSHOT-quarkus-2.10.2.Final-java17"
@@ -57,25 +57,25 @@ acapy:
   tag: "py36-1.16-1_0.7.5"
   # The configuration of the AcaPy endorser instance
   endorser:
-    # -- The url of the used indyLedger
+    # -- The url of the used indy ledger
     ledgerUrl: "https://idu.cloudcompass.ca"
     # -- The label of the instance
     label: "CatenaXIssuer"
     logLevel: "INFO"
     # -- The network identifier of the used indy ledger
     networkIdentifier: "idunion:test"
-    # -- The host of the used Database
+    # -- The host of the used database
     databaseHost: "acapypostgresql"
-    # -- The Port at which the wallet is reachable
+    # -- The port at which the wallet is reachable
     endpointPort: "8000"
-    # -- The Port at which the admin api is reachable
+    # -- The port at which the admin api is reachable
     adminPort: "11000"
     # -- The url of the admin api
     adminUrl: "http://localhost:11000"
     secret:
-      # -- The API-Key of the admin endpoints. A random and secure String
+      # -- The API-Key of the admin endpoints. It must be a random and secure String
       apikey: "0"
-      # -- The Seed of the Wallet. Must be Random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers)
+      # -- The seed of the wallet. It must be random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers)
       walletseed: "0"
       dbaccount: "postgres"
       dbadminuser: "postgres"
@@ -87,7 +87,7 @@ acapy:
       walletkey: "0"
   # AcaPy multi-tenancy instance
   mt:
-    # -- The url of the used indyLedger
+    # -- The url of the used indy ledger
     ledgerUrl: "https://idu.cloudcompass.ca"
     # -- The label of the instance
     label: "CatenaXIssuer"
@@ -95,20 +95,20 @@ acapy:
     # -- The network identifier of the used indy ledger
     networkIdentifier: "idunion:test"
     databaseHost: "acapypostgresql"
-    # -- The Port at which the sub-wallets are reachable
+    # -- The port at which the sub-wallets are reachable
     endpointPort: "8003"
-    # -- The Port at which the admin api is reachable
+    # -- The port at which the admin api is reachable
     adminPort: "11003"
     # -- The url of the admin api
     adminUrl: "http://localhost:11003"
-    # -- The Short DID of the Base Wallet
+    # -- The short DID of the base wallet
     endorserPublicDid: "ShortDIDPlaceholderX"
     # -- The url at which events are sent. It should be the webhook endpoint in MIW
     webhookUrl: "http://localhost:8080/webhook"
     secret:
-      # -- The API-Key of the admin endpoints. A random and secure String
+      # -- The API-Key of the admin endpoints. It must be a random and secure String
       apikey: "0"
-      # -- The Seed of the Wallet. Must be Random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers)
+      # -- The seed of the wallet. It must be random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers)
       walletseed: "0"
       dbaccount: "postgres"
       dbadminuser: "postgres"
@@ -120,7 +120,7 @@ acapy:
       walletkey: "0"
 ingress:
   enabled: false
-# Configuration and secrets of the Database that is used by AcaPy
+# The configuration and secrets of the database that is used by AcaPy
 acapypostgresql:
   enabled: true
   auth:
@@ -129,7 +129,7 @@ acapypostgresql:
     password: "postgres"
     postgrespassword: "postgres"
     user: "postgres"
-# Configuration and secrets of the Database that is used by the MIW
+# The configuration and secrets of the database that is used by the MIW
 postgresql:
   enabled: true
   auth:
@@ -143,7 +143,7 @@ postgresql:
         emptyDir: {}
     initContainers:
       - name: initdb
-        # -- The image is built and used to initialize the Database of MIW. The tag must equal the appVersion in Chart.yaml
+        # -- The image is built and used to initialize the database of MIW. The tag must equal the appVersion in Chart.yaml
         image: ghcr.io/catenax-ng/tx-managed-identity-wallets_initdb:3.0.0
         imagePullPolicy: Always
         command:
@@ -172,11 +172,11 @@ datapool:
   authUrl: ""
 managedIdentityWallets:
   secret:
-    # -- Database connection string to the Postgres Database of MIW
+    # -- Database connection string to the Postgres database of MIW
     jdbcurl: "jdbc:postgresql://postgresql:5432/postgres?user=postgres&password=postgres"
-    # -- It can be extracted from keycloak
+    # -- It can be extracted from Keycloak
     authclientid: "clientid"
-    # -- It can be extracted from keycloak
+    # -- It can be extracted from Keycloak
     authclientsecret: "client"
     # -- client id for accessing the BPDM data pool endpoint
     bpdmauthclientid: "clientid"
