@@ -26,7 +26,7 @@ logging:
 wallet:
   # -- The BPN of the base wallet
   baseWalletBpn: ""
-  # -- The short DID of the base wallet. 
+  # -- The short DID of the base wallet.
   # It Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger.
   # It should be registiered on the indy ledger with role endorser.
   baseWalletShortDid: ""
