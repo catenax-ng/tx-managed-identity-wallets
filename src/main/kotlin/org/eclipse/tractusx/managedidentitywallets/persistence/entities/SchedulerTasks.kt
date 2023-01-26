@@ -20,7 +20,7 @@
 package org.eclipse.tractusx.managedidentitywallets.persistence.entities
 
 import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.javatime.timestamp
+import org.jetbrains.exposed.sql.javatime.*
 
 object SchedulerTasks : Table("scheduled_tasks") {
     val taskName = text("task_name")

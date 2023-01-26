@@ -19,10 +19,11 @@
 
 package org.eclipse.tractusx.managedidentitywallets.plugins
 
-import io.ktor.application.*
 import io.ktor.http.cio.websocket.*
-import io.ktor.routing.*
 import io.ktor.websocket.*
+import io.ktor.application.*
+import io.ktor.routing.*
+
 import java.time.Duration
 
 fun Application.configureSockets() {

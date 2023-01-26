@@ -24,28 +24,12 @@ import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.CredentialStatus
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.JsonLdContexts
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.LdProofDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiablePresentationDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiablePresentationRequestDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.WithDateValidation
+import org.eclipse.tractusx.managedidentitywallets.models.ssi.*
 import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.VerifyResponse
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureOpenAPI
-import org.eclipse.tractusx.managedidentitywallets.plugins.configurePersistence
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureRouting
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureSecurity
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureSerialization
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureStatusPages
+import org.eclipse.tractusx.managedidentitywallets.plugins.*
 import org.eclipse.tractusx.managedidentitywallets.routes.appRoutes
 import java.io.File
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 @kotlinx.serialization.ExperimentalSerializationApi
 class PresentationsTest {
@@ -88,11 +72,11 @@ class PresentationsTest {
         }) {
             // programmatically add a wallet
             runBlocking {
-                EnvironmentTestSetup.walletService.initBaseWalletAndSubscribeForAriesWS(
+                EnvironmentTestSetup.walletService.initCatenaXWalletAndSubscribeForAriesWS(
                     EnvironmentTestSetup.DEFAULT_BPN,
                     EnvironmentTestSetup.DEFAULT_DID,
                     EnvironmentTestSetup.DEFAULT_VERKEY,
-                    "Base-Wallet"
+                    "Catena-X-Wallet"
                 )
                 SingletonTestData.baseWalletVerKey = EnvironmentTestSetup.DEFAULT_VERKEY
                 SingletonTestData.baseWalletDID = EnvironmentTestSetup.DEFAULT_DID
@@ -359,11 +343,11 @@ class PresentationsTest {
         }) {
             // programmatically add a wallet
             runBlocking {
-                EnvironmentTestSetup.walletService.initBaseWalletAndSubscribeForAriesWS(
+                EnvironmentTestSetup.walletService.initCatenaXWalletAndSubscribeForAriesWS(
                     EnvironmentTestSetup.DEFAULT_BPN,
                     EnvironmentTestSetup.DEFAULT_DID,
                     EnvironmentTestSetup.DEFAULT_VERKEY,
-                    "Base-Wallet"
+                    "Catena-X-Wallet"
                 )
                 val walletDto =  EnvironmentTestSetup.walletService.getWallet(EnvironmentTestSetup.DEFAULT_BPN)
                 SingletonTestData.baseWalletVerKey = EnvironmentTestSetup.DEFAULT_VERKEY
@@ -517,11 +501,11 @@ class PresentationsTest {
         }) {
             // programmatically add base wallet
             runBlocking {
-                EnvironmentTestSetup.walletService.initBaseWalletAndSubscribeForAriesWS(
+                EnvironmentTestSetup.walletService.initCatenaXWalletAndSubscribeForAriesWS(
                     EnvironmentTestSetup.DEFAULT_BPN,
                     EnvironmentTestSetup.DEFAULT_DID,
                     EnvironmentTestSetup.DEFAULT_VERKEY,
-                    "Base-Wallet"
+                    "Catena-X-Wallet"
                 )
             }
             //TODO replace did:sov in all used json files when indy did method is supported by AcaPy
@@ -663,11 +647,11 @@ class PresentationsTest {
         }) {
             // programmatically add base wallet
             runBlocking {
-                EnvironmentTestSetup.walletService.initBaseWalletAndSubscribeForAriesWS(
+                EnvironmentTestSetup.walletService.initCatenaXWalletAndSubscribeForAriesWS(
                     EnvironmentTestSetup.DEFAULT_BPN,
                     EnvironmentTestSetup.DEFAULT_DID,
                     EnvironmentTestSetup.DEFAULT_VERKEY,
-                    "Base-Wallet"
+                    "Catena-X-Wallet"
                 )
                 val wallet = EnvironmentTestSetup.walletService.getWallet(EnvironmentTestSetup.DEFAULT_DID)
                 SingletonTestData.baseWalletDID = EnvironmentTestSetup.DEFAULT_DID

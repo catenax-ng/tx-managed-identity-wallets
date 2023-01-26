@@ -26,27 +26,11 @@ import kotlinx.serialization.json.Json
 import org.eclipse.tractusx.managedidentitywallets.models.StoreVerifiableCredentialParameter
 import org.eclipse.tractusx.managedidentitywallets.models.WalletCreateDto
 import org.eclipse.tractusx.managedidentitywallets.models.WalletDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.CredentialStatus
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.JsonLdContexts
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.LdProofDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.ListCredentialRequestData
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.ListCredentialSubject
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialRequestDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialRequestWithoutIssuerDto
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureOpenAPI
-import org.eclipse.tractusx.managedidentitywallets.plugins.configurePersistence
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureRouting
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureSecurity
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureSerialization
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureStatusPages
+import org.eclipse.tractusx.managedidentitywallets.models.ssi.*
+import org.eclipse.tractusx.managedidentitywallets.plugins.*
 import org.eclipse.tractusx.managedidentitywallets.routes.appRoutes
 import java.io.File
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 @kotlinx.serialization.ExperimentalSerializationApi
 class CredentialsTest {
@@ -89,11 +73,11 @@ class CredentialsTest {
         }) {
             // programmatically add a wallet
             runBlocking {
-                EnvironmentTestSetup.walletService.initBaseWalletAndSubscribeForAriesWS(
+                EnvironmentTestSetup.walletService.initCatenaXWalletAndSubscribeForAriesWS(
                     EnvironmentTestSetup.DEFAULT_BPN,
                     EnvironmentTestSetup.DEFAULT_DID,
                     EnvironmentTestSetup.DEFAULT_VERKEY,
-                    "Base-Wallet"
+                    "Catena-X-Wallet"
                 )
             }
 
@@ -172,11 +156,11 @@ class CredentialsTest {
         }) {
             // programmatically add a wallet
             runBlocking {
-                EnvironmentTestSetup.walletService.initBaseWalletAndSubscribeForAriesWS(
+                EnvironmentTestSetup.walletService.initCatenaXWalletAndSubscribeForAriesWS(
                     EnvironmentTestSetup.DEFAULT_BPN,
                     EnvironmentTestSetup.DEFAULT_DID,
                     EnvironmentTestSetup.DEFAULT_VERKEY,
-                    "Base-Wallet"
+                    "Catena-X-Wallet"
                 )
                 SingletonTestData.baseWalletVerKey = EnvironmentTestSetup.DEFAULT_VERKEY
                 SingletonTestData.baseWalletDID = EnvironmentTestSetup.DEFAULT_DID
@@ -445,7 +429,7 @@ class CredentialsTest {
     }
 
     @Test
-    fun testIssueCredentialsByBaseWallet() {
+    fun testIssueCredentialsByCatenaXWallet() {
         withTestApplication({
             EnvironmentTestSetup.setupEnvironment(environment)
             configurePersistence()
@@ -465,11 +449,11 @@ class CredentialsTest {
         }) {
             // programmatically add a wallet
             runBlocking {
-                EnvironmentTestSetup.walletService.initBaseWalletAndSubscribeForAriesWS(
+                EnvironmentTestSetup.walletService.initCatenaXWalletAndSubscribeForAriesWS(
                     EnvironmentTestSetup.DEFAULT_BPN,
                     EnvironmentTestSetup.DEFAULT_DID,
                     EnvironmentTestSetup.DEFAULT_VERKEY,
-                    "Base-Wallet"
+                    "Catena-X-Wallet"
                 )
                 SingletonTestData.baseWalletVerKey = EnvironmentTestSetup.DEFAULT_VERKEY
                 SingletonTestData.baseWalletDID = EnvironmentTestSetup.DEFAULT_DID
@@ -573,11 +557,11 @@ class CredentialsTest {
         }) {
             // programmatically add a wallet
             runBlocking {
-                EnvironmentTestSetup.walletService.initBaseWalletAndSubscribeForAriesWS(
+                EnvironmentTestSetup.walletService.initCatenaXWalletAndSubscribeForAriesWS(
                     EnvironmentTestSetup.DEFAULT_BPN,
                     EnvironmentTestSetup.DEFAULT_DID,
                     EnvironmentTestSetup.DEFAULT_VERKEY,
-                    "Base-Wallet"
+                    "Catena-X-Wallet"
                 )
             }
             val walletDto = EnvironmentTestSetup.walletService.getWallet(EnvironmentTestSetup.DEFAULT_BPN)

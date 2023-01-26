@@ -19,9 +19,8 @@
 
 package org.eclipse.tractusx.managedidentitywallets.services
 
-import org.eclipse.tractusx.managedidentitywallets.models.NotImplementedException
-import org.eclipse.tractusx.managedidentitywallets.models.UnprocessableEntityException
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.EndPointType
+import org.eclipse.tractusx.managedidentitywallets.models.*
+import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.*
 import java.io.ByteArrayInputStream
 import java.security.SecureRandom
 import java.util.*
@@ -84,7 +83,7 @@ class UtilsService(private val networkIdentifier: String) {
 
     fun checkIndyDid(did: String) {
         // allow old and new DID methods to accomodate migrated scenarios
-        val regex = """(${getDidMethodPrefixWithNetworkIdentifier()}|${getOldDidMethodPrefixWithNetworkIdentifier()})[^-\s]{16,}[^-\s]*${'$'}""".toRegex()
+        val regex = """(${getDidMethodPrefixWithNetworkIdentifier()}|${getOldDidMethodPrefixWithNetworkIdentifier()}).[^-\s]{16,}${'$'}""".toRegex()
         if (!regex.matches(did)) {
             throw UnprocessableEntityException("The DID must be a valid and supported DID: ${getDidMethodPrefixWithNetworkIdentifier()} or ${getOldDidMethodPrefixWithNetworkIdentifier()}")
         }

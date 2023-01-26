@@ -27,29 +27,18 @@ import io.bkbn.kompendium.core.metadata.RequestInfo
 import io.bkbn.kompendium.core.metadata.ResponseInfo
 import io.bkbn.kompendium.core.metadata.method.GetInfo
 import io.bkbn.kompendium.core.metadata.method.PostInfo
+
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import org.eclipse.tractusx.managedidentitywallets.models.*
 import org.eclipse.tractusx.managedidentitywallets.models.BadRequestException
-import org.eclipse.tractusx.managedidentitywallets.models.forbiddenException
-import org.eclipse.tractusx.managedidentitywallets.models.semanticallyInvalidInputException
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.CredentialStatus
+
+import org.eclipse.tractusx.managedidentitywallets.models.ssi.*
 import org.eclipse.tractusx.managedidentitywallets.models.ssi.JsonLdContexts
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.LdProofDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.ListCredentialRequestData
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.ListCredentialSubject
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.ListNameParameter
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.StatusListRefreshParameters
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialIssuanceFlowRequestDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialParameters
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialRequestDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialRequestWithoutIssuerDto
 import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.CredentialOfferResponse
-import org.eclipse.tractusx.managedidentitywallets.models.syntacticallyInvalidInputException
-import org.eclipse.tractusx.managedidentitywallets.models.unauthorizedException
 import org.eclipse.tractusx.managedidentitywallets.services.IRevocationService
 import org.eclipse.tractusx.managedidentitywallets.services.IWalletService
 import org.eclipse.tractusx.managedidentitywallets.services.UtilsService
@@ -158,10 +147,10 @@ fun Route.vcRoutes(
                     val verifiableCredentialRequestDto = call.receive<VerifiableCredentialRequestWithoutIssuerDto>()
                     AuthorizationHandler.checkHasRightsToUpdateWallet(
                         call,
-                        walletService.getBaseWallet().bpn
+                        walletService.getCatenaXWallet().bpn
                     )
 
-                    val verifiableCredentialDto = walletService.issueBaseWalletCredential(verifiableCredentialRequestDto)
+                    val verifiableCredentialDto = walletService.issueCatenaXCredential(verifiableCredentialRequestDto)
                     call.respond(HttpStatusCode.Created, verifiableCredentialDto)
                 }
             }
@@ -195,7 +184,7 @@ fun Route.vcRoutes(
                     val verifiableCredentialRequestDto = call.receive<VerifiableCredentialIssuanceFlowRequestDto>()
                     AuthorizationHandler.checkHasRightsToUpdateWallet(
                         call,
-                        walletService.getBaseWallet().bpn
+                        walletService.getCatenaXWallet().bpn
                     )
                     val vc = verifiableCredentialRequestDto.toInternalVerifiableCredentialIssuanceFlowRequest()
                     call.respond(

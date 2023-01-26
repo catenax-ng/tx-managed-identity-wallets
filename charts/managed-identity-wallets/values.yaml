@@ -12,6 +12,7 @@ auth:
 image:
   name: "catenax-ng/tx-managed-identity-wallets_service"
   registry: "ghcr.io"
+  # -- Overrides the image tag whose default is the chart appVersion
   tag: ""
   secret: "acr-credentials"
 allowEmptyPassword: "\"yes\""
@@ -21,16 +22,6 @@ db:
 namespace: "managed-identity-wallets"
 logging:
   exposed: "INFO"
-# The OpenAPI configuration in MIW
-openapi:
-  title: "Managed Identity Wallets API"
-  description: "Managed Identity Wallets API"
-  termsOfServiceUrl: "https://www.eclipse.org/legal/termsofuse.php"
-  contactName: "Eclipse Tractus-X"
-  contactEmail: "tractusx-dev@eclipse.org"
-  contactUrl: "https://projects.eclipse.org/projects/automotive.tractusx"
-  licenseName: "Apache 2.0"
-  licenseUrl: "https://github.com/eclipse-tractusx/managed-identity-wallets/blob/main/LICENSE"
 # The base wallet configuration in MIW
 wallet:
   # -- The BPN of the base wallet

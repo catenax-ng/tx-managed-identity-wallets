@@ -55,7 +55,9 @@ fun Application.configureJobs() {
 
     val scheduler: Scheduler = Scheduler
         .create(initDatabase(jdbcUrl))
-        .startTasks(bpdmUpdate, updateRevocationList)
+        //TODO: replace after fixing the Business Partner Data requests
+        //.startTasks(bpdmUpdate, updateRevocationList)
+        .startTasks(updateRevocationList)
         .pollingInterval(Duration.ofHours(1))
         .registerShutdownHook()
         .threads(3)
@@ -82,7 +84,7 @@ fun initDatabase(jdbcUrl: String): DataSource {
 
 fun runPullDataAndUpdateCatenaXCredentialJobPayload() {
     runBlocking {
-        Services.businessPartnerDataService.pullDataAndUpdateBaseWalletCredentialsAsync()
+        Services.businessPartnerDataService.pullDataAndUpdateCatenaXCredentialsAsync()
     }
 }
 

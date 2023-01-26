@@ -19,6 +19,8 @@
 
 package org.eclipse.tractusx.managedidentitywallets.services
 
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.eclipse.tractusx.managedidentitywallets.models.WalletDto
@@ -56,13 +58,13 @@ class BaseWalletAriesEventHandler(
                     )
                     walletService.addConnection(
                         connectionId = connection.connectionId,
-                        connectionOwnerDid = walletService.getBaseWallet().did,
+                        connectionOwnerDid = walletService.getCatenaXWallet().did,
                         connectionTargetDid = theirWallet.did,
                         connectionState = connection.rfc23State
                     )
                     runBlocking {
                         walletService.setEndorserMetaDataForAcapyConnection(connection.connectionId)
-                        walletService.acceptConnectionRequest(walletService.getBaseWallet().did, connection)
+                        walletService.acceptConnectionRequest(walletService.getCatenaXWallet().did, connection)
                     }
                 }
             }
@@ -77,24 +79,24 @@ class BaseWalletAriesEventHandler(
                 val webhookUrl: String? = updateConnectionStateAndSendWebhook(connection)
 
                 if (walletOfConnectionTarget.pendingMembershipIssuance) {
-                    runBlocking {
+                    GlobalScope.launch {
                         val successBpnCred = businessPartnerDataService
-                            .issueAndSendBaseWalletCredentialsForSelfManagedWalletsAsync(
+                            .issueAndSendCatenaXCredentialsForSelfManagedWalletsAsync(
                                 targetWallet = walletOfConnectionTarget,
                                 connectionId = connection.connectionId,
                                 webhookUrl = webhookUrl,
                                 type = JsonLdTypes.BPN_TYPE,
                                 data = null
-                            )
-                        val successMembershipCred  = businessPartnerDataService
-                            .issueAndSendBaseWalletCredentialsForSelfManagedWalletsAsync(
+                            ).await()
+                            val successMembershipCred = businessPartnerDataService
+                            .issueAndSendCatenaXCredentialsForSelfManagedWalletsAsync(
                                 targetWallet = walletOfConnectionTarget,
                                 connectionId = connection.connectionId,
                                 webhookUrl = webhookUrl,
                                 type = JsonLdTypes.MEMBERSHIP_TYPE,
                                 data = null
-                            )
-                        if (successBpnCred.await() && successMembershipCred.await()) {
+                            ).await()
+                        if (successBpnCred && successMembershipCred) {
                             transaction { walletService.setPartnerMembershipIssued(walletOfConnectionTarget) }
                         }
                     }
@@ -131,7 +133,7 @@ class BaseWalletAriesEventHandler(
             when(v20Credential.state) {
                 CredentialExchangeState.OFFER_RECEIVED -> {
                     runBlocking {
-                        walletService.acceptReceivedOfferVc(walletService.getBaseWallet().did, v20Credential)
+                        walletService.acceptReceivedOfferVc(walletService.getCatenaXWallet().did, v20Credential)
                     }
                 }
                 CredentialExchangeState.CREDENTIAL_ISSUED -> {
@@ -164,7 +166,7 @@ class BaseWalletAriesEventHandler(
                     try {
                         transaction {
                             runBlocking {
-                                walletService.acceptAndStoreReceivedIssuedVc(walletService.getBaseWallet().did, v20Credential)
+                                walletService.acceptAndStoreReceivedIssuedVc(walletService.getCatenaXWallet().did, v20Credential)
                                 if (webhookService.getWebhookByThreadId(threadId) != null) {
                                     webhookService.updateStateOfWebhook(threadId, v20Credential.state.name)
                                 }

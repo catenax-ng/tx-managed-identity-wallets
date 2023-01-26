@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -21,12 +21,8 @@ package org.eclipse.tractusx.managedidentitywallets.persistence.repositories
 
 import org.eclipse.tractusx.managedidentitywallets.models.ConnectionDto
 import org.eclipse.tractusx.managedidentitywallets.models.NotFoundException
-import org.eclipse.tractusx.managedidentitywallets.persistence.entities.Connection
-import org.eclipse.tractusx.managedidentitywallets.persistence.entities.Connections
-import org.jetbrains.exposed.sql.andWhere
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.or
-import org.jetbrains.exposed.sql.selectAll
+import org.eclipse.tractusx.managedidentitywallets.persistence.entities.*
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class ConnectionRepository {

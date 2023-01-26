@@ -27,27 +27,8 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.features.observer.*
 import io.ktor.client.statement.*
-import org.eclipse.tractusx.managedidentitywallets.models.ConflictException
-import org.eclipse.tractusx.managedidentitywallets.models.ConnectionDto
-import org.eclipse.tractusx.managedidentitywallets.models.ForbiddenException
-import org.eclipse.tractusx.managedidentitywallets.models.SelfManagedWalletCreateDto
-import org.eclipse.tractusx.managedidentitywallets.models.SelfManagedWalletResultDto
-import org.eclipse.tractusx.managedidentitywallets.models.UnprocessableEntityException
-import org.eclipse.tractusx.managedidentitywallets.models.WalletCreateDto
-import org.eclipse.tractusx.managedidentitywallets.models.WalletDto
-import org.eclipse.tractusx.managedidentitywallets.models.WalletExtendedData
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.DidDocumentDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.DidServiceDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.DidServiceUpdateRequestDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.InvitationRequestDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.IssuedVerifiableCredentialRequestDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.ListCredentialRequestData
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialIssuanceFlowRequest
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialRequestDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiableCredentialRequestWithoutIssuerDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiablePresentationDto
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.VerifiablePresentationRequestDto
+import org.eclipse.tractusx.managedidentitywallets.models.*
+import org.eclipse.tractusx.managedidentitywallets.models.ssi.*
 import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.CredentialOfferResponse
 import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.VerifyResponse
 import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.WalletAndAcaPyConfig
@@ -62,7 +43,7 @@ interface IWalletService {
 
     fun getWallet(identifier: String, withCredentials: Boolean = false): WalletDto
 
-    fun getBaseWallet(): WalletExtendedData
+    fun getCatenaXWallet(): WalletExtendedData
 
     fun getDidFromBpn(bpn: String): String
 
@@ -86,8 +67,8 @@ interface IWalletService {
 
     suspend fun issueCredential(vcRequest: VerifiableCredentialRequestDto): VerifiableCredentialDto
 
-    suspend fun issueBaseWalletCredential(
-        vcBaseWalletRequest: VerifiableCredentialRequestWithoutIssuerDto
+    suspend fun issueCatenaXCredential(
+        vcCatenaXRequest: VerifiableCredentialRequestWithoutIssuerDto
     ): VerifiableCredentialDto
 
     suspend fun triggerCredentialIssuanceFlow(
@@ -141,7 +122,7 @@ interface IWalletService {
 
     fun getConnection(connectionId: String): ConnectionDto?
 
-    fun getConnectionWithBaseWallet(theirDid: String): ConnectionDto?
+    fun getConnectionWithCatenaX(theirDid: String): ConnectionDto?
 
     fun addConnection(
         connectionId: String,
@@ -150,7 +131,7 @@ interface IWalletService {
         connectionState: String
     )
 
-    suspend fun initBaseWalletAndSubscribeForAriesWS(bpn: String, did: String, verkey: String, name: String)
+    suspend fun initCatenaXWalletAndSubscribeForAriesWS(bpn: String, did: String, verkey: String, name: String)
 
     suspend fun acceptConnectionRequest(identifier: String, connectionRecord: ConnectionRecord)
 

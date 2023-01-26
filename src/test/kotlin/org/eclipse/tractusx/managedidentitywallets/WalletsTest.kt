@@ -24,42 +24,17 @@ import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-import org.eclipse.tractusx.managedidentitywallets.models.WalletCreateDto
-import org.eclipse.tractusx.managedidentitywallets.models.WalletDto
-import org.eclipse.tractusx.managedidentitywallets.models.WalletDtoParameter
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.CreatedSubWalletResult
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.DidResult
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.DidResultDetails
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.WalletAndAcaPyConfig
-import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.WalletSettings
+import org.eclipse.tractusx.managedidentitywallets.models.*
+import org.eclipse.tractusx.managedidentitywallets.models.ssi.acapy.*
 import org.eclipse.tractusx.managedidentitywallets.persistence.repositories.ConnectionRepository
 import org.eclipse.tractusx.managedidentitywallets.persistence.repositories.CredentialRepository
 import org.eclipse.tractusx.managedidentitywallets.persistence.repositories.WalletRepository
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureOpenAPI
-import org.eclipse.tractusx.managedidentitywallets.plugins.configurePersistence
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureRouting
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureSecurity
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureSerialization
-import org.eclipse.tractusx.managedidentitywallets.plugins.configureStatusPages
+import org.eclipse.tractusx.managedidentitywallets.plugins.*
 import org.eclipse.tractusx.managedidentitywallets.routes.appRoutes
-import org.eclipse.tractusx.managedidentitywallets.services.AcaPyWalletServiceImpl
-import org.eclipse.tractusx.managedidentitywallets.services.IAcaPyService
-import org.eclipse.tractusx.managedidentitywallets.services.IRevocationService
-import org.eclipse.tractusx.managedidentitywallets.services.IWebhookService
-import org.eclipse.tractusx.managedidentitywallets.services.UtilsService
+import org.eclipse.tractusx.managedidentitywallets.services.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.mockito.kotlin.any
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.spy
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import org.mockito.kotlin.*
+import kotlin.test.*
 
 @kotlinx.serialization.ExperimentalSerializationApi
 class WalletsTest {
@@ -314,14 +289,14 @@ class WalletsTest {
             // clean up created wallets
             runBlocking {
                 EnvironmentTestSetup.walletService.deleteWallet("bpn4")
-                EnvironmentTestSetup.walletService.deleteWallet(EnvironmentTestSetup.DEFAULT_BPN) // Base wallet
+                EnvironmentTestSetup.walletService.deleteWallet(EnvironmentTestSetup.DEFAULT_BPN) // Catena-X wallet
                 assertEquals(0, EnvironmentTestSetup.walletService.getAll().size)
             }
         }
     }
 
     @Test
-    fun testInitBaseWallet() {
+    fun testInitCatenaXWallet() {
         withTestApplication({
             EnvironmentTestSetup.setupEnvironment(environment)
             configurePersistence()
@@ -340,11 +315,11 @@ class WalletsTest {
         }) {
 
             runBlocking {
-                EnvironmentTestSetup.walletService.initBaseWalletAndSubscribeForAriesWS(
+                EnvironmentTestSetup.walletService.initCatenaXWalletAndSubscribeForAriesWS(
                     EnvironmentTestSetup.DEFAULT_BPN,
                     EnvironmentTestSetup.DEFAULT_DID,
                     EnvironmentTestSetup.DEFAULT_VERKEY,
-                    "Base_Wallet"
+                    "CatenaX"
                 )
             }
 
@@ -356,7 +331,7 @@ class WalletsTest {
             bpnOfWalletUsingIdentifier = EnvironmentTestSetup.walletService.getBpnFromIdentifier(EnvironmentTestSetup.DEFAULT_BPN)
             assertTrue { bpnOfWalletUsingIdentifier == EnvironmentTestSetup.DEFAULT_BPN}
 
-            val wallet = EnvironmentTestSetup.walletService.getBaseWallet()
+            val wallet = EnvironmentTestSetup.walletService.getCatenaXWallet()
             assertTrue { wallet.bpn == EnvironmentTestSetup.DEFAULT_BPN }
             assertTrue { wallet.did == EnvironmentTestSetup.DEFAULT_DID }
             assertNull(wallet.walletId )
@@ -442,11 +417,11 @@ class WalletsTest {
                     )
                     val walletServiceSpy = spy(walletService)
 
-                    EnvironmentTestSetup.walletService.initBaseWalletAndSubscribeForAriesWS(
+                    EnvironmentTestSetup.walletService.initCatenaXWalletAndSubscribeForAriesWS(
                         EnvironmentTestSetup.DEFAULT_BPN,
                         EnvironmentTestSetup.DEFAULT_DID,
                         EnvironmentTestSetup.DEFAULT_VERKEY,
-                        "Base_Wallet"
+                        "CatenaX"
                     )
 
                     walletServiceSpy.createWallet(

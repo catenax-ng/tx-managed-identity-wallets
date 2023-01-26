@@ -1,14 +1,14 @@
 {
     "openapi": "3.0.3",
     "info": {
-        "title": "Managed Identity Wallets API",
-        "version": "3.1.0",
-        "description": "Managed Identity Wallets API",
-        "termsOfService": "https://www.eclipse.org/legal/termsofuse.php",
+        "title": "Catena-X Core Managed Identity Wallets API",
+        "version": "3.0.0",
+        "description": "Catena-X Core Managed Identity Wallets API",
+        "termsOfService": "https://www.catena-x.net/",
         "contact": {
-            "name": "Eclipse Tractus-X",
-            "url": "https://projects.eclipse.org/projects/automotive.tractusx",
-            "email": "tractusx-dev@eclipse.org"
+            "name": "Catena-X Core Agile Release Train",
+            "url": "https://www.catena-x.net/",
+            "email": "info@catena-x.net"
         },
         "license": {
             "name": "Apache 2.0",
@@ -16,6 +16,18 @@
         }
     },
     "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Local Dev Environment"
+        },
+        {
+            "url": "https://managed-identity-wallets.dev.demo.catena-x.net",
+            "description": "Catena-X Dev Environment"
+        },
+        {
+            "url": "https://managed-identity-wallets.int.demo.catena-x.net",
+            "description": "Catena-X Int Environment"
+        }
     ],
     "paths": {
         "/api/wallets": {
@@ -122,7 +134,7 @@
                                             "bpn": "bpn",
                                             "did": "did",
                                             "verKey": "verkey",
-                                            "createdAt": "2023-01-25T10:26:42.250994",
+                                            "createdAt": "2023-01-23T11:24:25.023037446",
                                             "vcs": [
                                             ],
                                             "pendingMembershipIssuance": false,
@@ -342,7 +354,7 @@
                                             "name": "name",
                                             "bpn": "bpn",
                                             "did": "did",
-                                            "createdAt": "2023-01-25T10:26:42.251136",
+                                            "createdAt": "2023-01-23T11:24:25.023118846",
                                             "vcs": [
                                             ],
                                             "pendingMembershipIssuance": false,
