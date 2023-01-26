@@ -28,28 +28,28 @@ Managed Identity Wallets Service
 | namespace | string | `"managed-identity-wallets"` |  |
 | logging.exposed | string | `"INFO"` |  |
 | wallet.baseWalletBpn | string | `""` | The BPN of the Base Wallet |
-| wallet.baseWalletShortDid | string | `""` | The short DID of the Base Wallet. Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger |
-| wallet.baseWalletVerkey | string | `""` | The Verkey (public-key) of the Base Wallet. |
+| wallet.baseWalletShortDid | string | `""` | The short DID of the Base Wallet.  It Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger. It should be registiered on the indy Ledger with role endorser. |
+| wallet.baseWalletVerkey | string | `""` | The Verkey (public-key) of the Base Wallet |
 | wallet.baseWalletName | string | `""` | The name of the Base Wallet |
 | revocation.refreshHour | string | `"3"` | At which hour (24-hour clock) the cron job should issue/update status-list credentials |
-| revocation.revocationServiceUrl | string | `"http://localhost:8086"` | The URL of the revocation service |
+| revocation.revocationServiceUrl | string | `"http://localhost:8086"` | The url of the revocation service |
 | revocationService.imageName | string | `"registry.gitlab.com/gaia-x/data-infrastructure-federation-services/not/notarization-service/revocation"` |  |
 | revocationService.tag | string | `"1.0.0-SNAPSHOT-quarkus-2.10.2.Final-java17"` |  |
 | revocationService.port | string | `"8086"` |  |
 | revocationService.httpAccessLog | bool | `true` |  |
 | revocationService.minIssueInterval | string | `"2"` | Issuance cache interval |
-| revocationService.baseUrlForCredentialList | string | `"https//localhost:8080/api/credentials/"` | The the endpoint in MIW at which status credentials can be issued  |
-| revocationService.clientIssuanceApiUrl | string | `"http://localhost:8080"` | The URL at which the MIW is reachable |
+| revocationService.baseUrlForCredentialList | string | `"https//localhost:8080/api/credentials/"` | The the endpoint in MIW at which status credentials can be issued |
+| revocationService.clientIssuanceApiUrl | string | `"http://localhost:8080"` | The url at which the MIW is reachable |
 | acapy.imageName | string | `"bcgovimages/aries-cloudagent"` |  |
 | acapy.tag | string | `"py36-1.16-1_0.7.5"` |  |
-| acapy.endorser.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The URl of the used indyLedger |
+| acapy.endorser.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The url of the used indyLedger |
 | acapy.endorser.label | string | `"CatenaXIssuer"` | The label of the instance |
 | acapy.endorser.logLevel | string | `"INFO"` |  |
-| acapy.endorser.networkIdentifier | string | `"idunion:test"` | The network identifier of the used ledger |
+| acapy.endorser.networkIdentifier | string | `"idunion:test"` | The network identifier of the used indy ledger |
 | acapy.endorser.databaseHost | string | `"acapypostgresql"` | The host of the used Database |
 | acapy.endorser.endpointPort | string | `"8000"` | The Port at which the wallet is reachable |
 | acapy.endorser.adminPort | string | `"11000"` | The Port at which the admin api is reachable |
-| acapy.endorser.adminUrl | string | `"http://localhost:11000"` | The URL of the admin api |
+| acapy.endorser.adminUrl | string | `"http://localhost:11000"` | The url of the admin api |
 | acapy.endorser.secret.apikey | string | `"0"` | The API-Key of the admin endpoints. A random and secure String |
 | acapy.endorser.secret.walletseed | string | `"0"` | The Seed of the Wallet. Must be Random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers) |
 | acapy.endorser.secret.dbaccount | string | `"postgres"` |  |
@@ -58,16 +58,16 @@ Managed Identity Wallets Service
 | acapy.endorser.secret.dbpassword | string | `"postgres"` |  |
 | acapy.endorser.secret.jwtsecret | string | `"0"` |  |
 | acapy.endorser.secret.walletkey | string | `"0"` |  |
-| acapy.mt.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The URl of the used indyLedger. Must equal acapy.endorser.ledgerUrl |
+| acapy.mt.ledgerUrl | string | `"https://idu.cloudcompass.ca"` | The url of the used indyLedger |
 | acapy.mt.label | string | `"CatenaXIssuer"` | The label of the instance |
 | acapy.mt.logLevel | string | `"INFO"` |  |
-| acapy.mt.networkIdentifier | string | `"idunion:test"` | The network identifier of the used ledger. Must equal acapy.endorser.networkIdentifier |
+| acapy.mt.networkIdentifier | string | `"idunion:test"` | The network identifier of the used indy ledger |
 | acapy.mt.databaseHost | string | `"acapypostgresql"` |  |
 | acapy.mt.endpointPort | string | `"8003"` | The Port at which the sub-wallets are reachable |
 | acapy.mt.adminPort | string | `"11003"` | The Port at which the admin api is reachable |
-| acapy.mt.adminUrl | string | `"http://localhost:11003"` | The URL of the admin api |
+| acapy.mt.adminUrl | string | `"http://localhost:11003"` | The url of the admin api |
 | acapy.mt.endorserPublicDid | string | `"ShortDIDPlaceholderX"` | The Short DID of the Base Wallet |
-| acapy.mt.webhookUrl | string | `"http://localhost:8080/webhook"` | The url at which events are sent. it should be the Endpoint in MIW |
+| acapy.mt.webhookUrl | string | `"http://localhost:8080/webhook"` | The url at which events are sent. It should be the webhook endpoint in MIW |
 | acapy.mt.secret.apikey | string | `"0"` | The API-Key of the admin endpoints. A random and secure String |
 | acapy.mt.secret.walletseed | string | `"0"` | The Seed of the Wallet. Must be Random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers) |
 | acapy.mt.secret.dbaccount | string | `"postgres"` |  |
@@ -110,7 +110,7 @@ Managed Identity Wallets Service
 | managedIdentityWallets.secret.bpdmauthclientid | string | `"clientid"` | client id for accessing the BPDM data pool endpoint |
 | managedIdentityWallets.secret.bpdmauthclientsecret | string | `"client"` | client secret for accessing the BPDM data pool endpoint |
 | certificate.host | string | `"localhost"` |  |
-| isLocal | bool | `false` | Deployment on kubernetes on local device |
+| isLocal | bool | `false` | Deployment on Kubernetes on local device |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

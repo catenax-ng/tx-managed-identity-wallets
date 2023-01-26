@@ -26,7 +26,9 @@ logging:
 wallet:
   # -- The BPN of the Base Wallet
   baseWalletBpn: ""
-  # -- The short DID of the Base Wallet. Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger
+  # -- The short DID of the Base Wallet. 
+  # It Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger.
+  # It should be registiered on the indy Ledger with role endorser.
   baseWalletShortDid: ""
   # -- The Verkey (public-key) of the Base Wallet
   baseWalletVerkey: ""
@@ -36,7 +38,7 @@ wallet:
 revocation:
   # --  At which hour (24-hour clock) the cron job should issue/update status-list credentials
   refreshHour: "3"
-  # -- The URL of the revocation service
+  # -- The url of the revocation service
   revocationServiceUrl: http://localhost:8086
 # The main configuration of the Revocation Service
 revocationService:
@@ -48,19 +50,19 @@ revocationService:
   minIssueInterval: "2"
   # -- The the endpoint in MIW at which status credentials can be issued
   baseUrlForCredentialList: "https//localhost:8080/api/credentials/"
-  # -- The URL at which the MIW is reachable
+  # -- The url at which the MIW is reachable
   clientIssuanceApiUrl: "http://localhost:8080"
 acapy:
   imageName: "bcgovimages/aries-cloudagent"
   tag: "py36-1.16-1_0.7.5"
   # The configuration of the AcaPy endorser instance
   endorser:
-    # -- The URl of the used indyLedger
+    # -- The url of the used indyLedger
     ledgerUrl: "https://idu.cloudcompass.ca"
     # -- The label of the instance
     label: "CatenaXIssuer"
     logLevel: "INFO"
-    # -- The network identifier of the used ledger
+    # -- The network identifier of the used indy ledger
     networkIdentifier: "idunion:test"
     # -- The host of the used Database
     databaseHost: "acapypostgresql"
@@ -68,7 +70,7 @@ acapy:
     endpointPort: "8000"
     # -- The Port at which the admin api is reachable
     adminPort: "11000"
-    # -- The URL of the admin api
+    # -- The url of the admin api
     adminUrl: "http://localhost:11000"
     secret:
       # -- The API-Key of the admin endpoints. A random and secure String
@@ -85,23 +87,23 @@ acapy:
       walletkey: "0"
   # AcaPy multi-tenancy instance
   mt:
-    # -- The URl of the used indyLedger. Must equal acapy.endorser.ledgerUrl
+    # -- The url of the used indyLedger
     ledgerUrl: "https://idu.cloudcompass.ca"
     # -- The label of the instance
     label: "CatenaXIssuer"
     logLevel: "INFO"
-    # -- The network identifier of the used ledger. Must equal acapy.endorser.networkIdentifier
+    # -- The network identifier of the used indy ledger
     networkIdentifier: "idunion:test"
     databaseHost: "acapypostgresql"
     # -- The Port at which the sub-wallets are reachable
     endpointPort: "8003"
     # -- The Port at which the admin api is reachable
     adminPort: "11003"
-    # -- The URL of the admin api
+    # -- The url of the admin api
     adminUrl: "http://localhost:11003"
     # -- The Short DID of the Base Wallet
     endorserPublicDid: "ShortDIDPlaceholderX"
-    # -- The url at which events are sent. it should be the Endpoint in MIW
+    # -- The url at which events are sent. It should be the webhook endpoint in MIW
     webhookUrl: "http://localhost:8080/webhook"
     secret:
       # -- The API-Key of the admin endpoints. A random and secure String
@@ -182,5 +184,5 @@ managedIdentityWallets:
     bpdmauthclientsecret: "client"
 certificate:
   host: "localhost"
-# -- Deployment on kubernetes on local device
+# -- Deployment on Kubernetes on local device
 isLocal: false
