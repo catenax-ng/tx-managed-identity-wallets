@@ -1,11 +1,20 @@
-# Setup Aca-Py on a Ubuntu
+# Setup Aca-Py on a Ubuntu Server
 
-The following steps describe how to set up an Aca-Py agent with nginx on Ubuntu 22.04:
+The following steps describe how to set up an Aca-Py agent with nginx on Ubuntu 22.04.
+
+## The Goal and Usage of the Agent
+This separate ACA-Py agent can be used to test the external connections and credential exchanges with the managed wallets in the [Managed-Identity-Wallet](https://github.com/eclipse-tractusx/managed-identity-wallets). 
+- To interact with the agent you can use
+  * either the Postman collection `./dev-containers/postman/Test-Acapy-SelfManagedWallet-Or-ExternalWallet.postman_collection` after modifying the URLs and apikey.
+  * Or using the provided swagger doc `https://mydomain.example.com/api/doc/` after replacing `https://mydomain.example.com/api/doc/` with your subdomain
+- The files `./docs/ExternalWalletInteraction.md` and `./docs/SelfManagedWallets.md` describe how the MIW can interact with an external (issuer) wallet and a self-managed (company) wallet
+
+## Setup Steps
 
 Requirements:
   - 1 CPU & 1 GiB RAM
-  - 10 GB memory
-  - Static IP with a domain that is assign to it e.x. `mydomain.example.com`
+  - 10 GB storage
+  - Static IP address with a domain that is assigned to it e.g. `mydomain.example.com`
   - Docker and Docker-compose
 
 - Create a folder `mkdir acapy-agent`
@@ -175,9 +184,3 @@ Requirements:
 - To remove the containers run `docker-compose down`
 - To delete all containers with the database run `docker-compose down -v`
 
-## The Goal and Usage of the Agent
-This separate ACA-Py agent can be used to test the external connections and credential exchanges with the managed wallets in the [Managed-Identity-Wallet](https://github.com/eclipse-tractusx/managed-identity-wallets). 
-- To interact with the agent you can use
-  * either the postman collection `./dev-containers/postman/Test-Acapy-SelfManagedWallet-Or-ExternalWallet.postman_collection` after modifying the URLs and apikey.
-  * Or using the provided swagger doc `https://mydomain.example.com/api/doc/` after replacing `https://mydomain.example.com/api/doc/` with your subdomain
-- The files `./docs/ExternalWalletInteraction.md` and `./docs/SelfManagedWallets.md` describe how the MIW can interact with an external wallet and a self-managed wallet

@@ -27,10 +27,10 @@ wallet:
   # -- The BPN of the base wallet
   baseWalletBpn: ""
   # -- The short DID of the base wallet.
-  # It Can be created with its Verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger.
-  # It should be registiered on the indy ledger with role endorser.
+  # It can be created with its verkey as described in https://github.com/eclipse-tractusx/managed-identity-wallets#integrate-with-an-write-restricted-indy-ledger.
+  # It should be registered on the Indy ledger with role endorser.
   baseWalletShortDid: ""
-  # -- The Verkey (public-key) of the base wallet
+  # -- The verkey (public key) of the base wallet
   baseWalletVerkey: ""
   # -- The name of the base wallet
   baseWalletName: ""
@@ -57,66 +57,66 @@ acapy:
   tag: "py36-1.16-1_0.7.5"
   # The configuration of the AcaPy endorser instance
   endorser:
-    # -- The url of the used indy ledger
+    # -- The url of the used Indy ledger
     ledgerUrl: "https://idu.cloudcompass.ca"
     # -- The label of the instance
     label: "CatenaXIssuer"
     logLevel: "INFO"
-    # -- The network identifier of the used indy ledger
+    # -- The network identifier of the used Indy ledger
     networkIdentifier: "idunion:test"
     # -- The host of the used database
     databaseHost: "acapypostgresql"
     # -- The port at which the wallet is reachable
     endpointPort: "8000"
-    # -- The port at which the admin api is reachable
+    # -- The port at which the admin API is reachable
     adminPort: "11000"
-    # -- The url of the admin api
+    # -- The url of the admin API
     adminUrl: "http://localhost:11000"
     secret:
-      # -- The API-Key of the admin endpoints. It must be a random and secure String
+      # -- The API key of the admin endpoints. It must be a random and secure string
       apikey: "0"
-      # -- The seed of the wallet. It must be random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers)
+      # -- The seed of the wallet. It must be random and secure (no patterns or use of dictionary words, the use of uppercase and lowercase letters - as well as numbers and allowed symbols, no personal preferences like names or phone numbers)
       walletseed: "0"
       dbaccount: "postgres"
       dbadminuser: "postgres"
       dbadminpassword: "postgres"
       dbpassword: "postgres"
-      ## -- It must be a random and secure String
+      ## -- It must be a random and secure string
       jwtsecret: "0"
-      ## -- It must be a random and secure String
+      ## -- It must be a random and secure string
       walletkey: "0"
   # AcaPy multi-tenancy instance
   mt:
-    # -- The url of the used indy ledger
+    # -- The url of the used Indy ledger
     ledgerUrl: "https://idu.cloudcompass.ca"
     # -- The label of the instance
     label: "CatenaXIssuer"
     logLevel: "INFO"
-    # -- The network identifier of the used indy ledger
+    # -- The network identifier of the used Indy ledger
     networkIdentifier: "idunion:test"
     databaseHost: "acapypostgresql"
     # -- The port at which the sub-wallets are reachable
     endpointPort: "8003"
-    # -- The port at which the admin api is reachable
+    # -- The port at which the admin API is reachable
     adminPort: "11003"
-    # -- The url of the admin api
+    # -- The url of the admin API
     adminUrl: "http://localhost:11003"
     # -- The short DID of the base wallet
     endorserPublicDid: "ShortDIDPlaceholderX"
     # -- The url at which events are sent. It should be the webhook endpoint in MIW
     webhookUrl: "http://localhost:8080/webhook"
     secret:
-      # -- The API-Key of the admin endpoints. It must be a random and secure String
+      # -- The API-Key of the admin endpoints. It must be a random and secure string
       apikey: "0"
-      # -- The seed of the wallet. It must be random and secure (No patterns or use of dictionary words, The use of uppercase and lowercase letters - as well as numbers and allowed symbols, No personal preferences like names or phone numbers)
+      # -- The seed of the wallet. It must be random and secure (no patterns or use of dictionary words, the use of uppercase and lowercase letters - as well as numbers and allowed symbols, no personal preferences like names or phone numbers)
       walletseed: "0"
       dbaccount: "postgres"
       dbadminuser: "postgres"
       dbadminpassword: "postgres"
       dbpassword: "postgres"
-      ## -- It must be a random and secure String
+      ## -- It must be a random and secure string
       jwtsecret: "0"
-      ## -- It must be a random and secure String
+      ## -- It must be a random and secure string
       walletkey: "0"
 ingress:
   enabled: false
