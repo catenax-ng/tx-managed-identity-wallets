@@ -1,19 +1,13 @@
-# Setup Aca-Py on a Cloud VM Infrastructure
+# Setup Aca-Py on a Ubuntu
 
-The following steps describe how to set up an Aca-Py agent with nginx on EC2 instance. However, those steps should be similar on other Cloud VM Infrastructure like (VM or EC):
+The following steps describe how to set up an Aca-Py agent with nginx on Ubuntu 22.04:
 
-- Log in to the EC2 instance provider
-- Create a new EC2 instance
-  - ubuntu 22.04
-  - name e.x. Acapy_External
+Requirements:
   - 1 CPU & 1 GiB RAM
   - 10 GB memory
-  - enable access using ssh
-- Create an elastic IP and assign it to the created instance
-- Create a domain e.x. `mydomain.example.com` and assign it to the elastic IP
-- Set up the inbound rules in the security groups of your instance
-   * add Port 80 and 443
-- Connect to the created instance using ssh `ssh -i "AcapyExternal.pem" ubuntu@mydomain.example.com`
+  - Static IP with a domain that is assign to it e.x. `mydomain.example.com`
+  - Docker and Docker-compose
+
 - Create a folder `mkdir acapy-agent`
 - Generate letsencrypt certificates
     - download certbot and get certificates. Please replace the domain in the last command
@@ -25,7 +19,7 @@ The following steps describe how to set up an Aca-Py agent with nginx on EC2 ins
         ```
     - Move the generated files private.pem and fullchain.pem to `./acapy-agent`
     - Lets Encrypt certificates expire after 90 and must be renewed. This can be done using the command `sudo certbot renew`. To verify that the certificate renewed, run `sudo certbot renew --dry-run`
-- Download Docker and Docker-compose for ubuntu 22.04
+
 - Create `.env` file with `vi .env` and then add the environment variables to it after changing the placeholders. Also replace `mydomain.example.com` with your domain
     ```
     POSTGRES_USER=postgres
@@ -182,7 +176,7 @@ The following steps describe how to set up an Aca-Py agent with nginx on EC2 ins
 - To delete all containers with the database run `docker-compose down -v`
 
 ## The Goal and Usage of the Agent
-This separate ACA-Py agent can be used to test the external communication and credential exchange with the managed wallets in the [Managed-Identity-Wallet](https://github.com/eclipse-tractusx/managed-identity-wallets). 
+This separate ACA-Py agent can be used to test the external connections and credential exchanges with the managed wallets in the [Managed-Identity-Wallet](https://github.com/eclipse-tractusx/managed-identity-wallets). 
 - To interact with the agent you can use
   * either the postman collection `./dev-containers/postman/Test-Acapy-SelfManagedWallet-Or-ExternalWallet.postman_collection` after modifying the URLs and apikey.
   * Or using the provided swagger doc `https://mydomain.example.com/api/doc/` after replacing `https://mydomain.example.com/api/doc/` with your subdomain
