@@ -9,7 +9,7 @@ services:
     env_file:
       - ../../dev.env
     volumes:
-      - postgres-data:/data/postgres-data
+      - postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
