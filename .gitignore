@@ -33,6 +33,7 @@ bin/
 .konan
 
 .DS_Store
+.java-version
 
 hs_err_pid*.log
 
