@@ -4,13 +4,20 @@ dotenv:
   - 'dev.env'
 
 tasks:
+  startKotlinApp:
+    desc: start the MIW Kotlin application
+    dir: ./
+    cmds:
+      - set -a; source dev.env; set +a
+      - ./gradlew run
+  
   runDevEnv:
     desc: Spin up local Docker environment
     dir: dev-assets/dev-containers
     cmds:
       - docker-compose up
 
-  unittest:
+  helmUnitTest:
     desc: Executes helm unittests
     dir: charts/managed-identity-wallets
     cmds:
