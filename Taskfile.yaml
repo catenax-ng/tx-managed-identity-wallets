@@ -4,21 +4,34 @@ dotenv:
   - 'dev.env'
 
 tasks:
-  startKotlinApp:
-    desc: start the MIW Kotlin application
-    dir: ./
-    cmds:
-      - set -a; source dev.env; set +a
-      - ./gradlew run
-  
-  runDevEnv:
-    desc: Spin up local Docker environment
+  startDevEnv:
+    desc: Start up local Docker environment
     dir: dev-assets/dev-containers
     cmds:
-      - docker-compose up
+      - docker-compose up -d
+
+  stopDevEnv:
+    desc: Stop local Docker environment
+    dir: dev-assets/dev-containers
+    cmds:
+      - docker-compose down
+
+  stopDevEnvAndRemoveVolumes:
+    desc: Stop local Docker environment
+    dir: dev-assets/dev-containers
+    cmds:
+      - docker-compose down -v
 
   helmUnitTest:
     desc: Executes helm unittests
     dir: charts/managed-identity-wallets
     cmds:
       - helm unittest .
+
+  startKotlinApp:
+    desc: start the MIW Kotlin application
+    deps: [startDevEnv]
+    dir: ./
+    cmds:
+      - set -a; source dev.env; set +a
+      - ./gradlew run
