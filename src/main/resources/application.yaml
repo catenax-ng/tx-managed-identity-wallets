@@ -11,9 +11,9 @@ spring:
   application:
     name: ${APPLICATION_NAME:miw}
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:miw}?useSSL=${USE_SSL:false}
-    username: ${DB_USER_NAME:root}
-    password: ${DB_PASSWORD:smart}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}?useSSL=${USE_SSL:false}
+    username: ${DB_USER_NAME:postgres}
+    password: ${DB_PASSWORD:local_password}
     initialization-mode: always
     hikari:
       maximumPoolSize: ${DB_POOL_SIZE:10}

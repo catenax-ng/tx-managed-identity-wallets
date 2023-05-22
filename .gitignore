@@ -42,3 +42,5 @@ dev.env
 dev-assets/secrets/*
 local.db
 jacoco-report
+
+.java-version
