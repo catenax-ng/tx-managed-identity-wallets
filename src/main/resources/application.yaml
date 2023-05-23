@@ -14,11 +14,13 @@ spring:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}?useSSL=${USE_SSL:false}
     username: ${DB_USER_NAME:postgres}
     password: ${DB_PASSWORD:local_password}
-    initialization-mode: always
     hikari:
       maximumPoolSize: ${DB_POOL_SIZE:10}
   jpa:
     show-sql: false
+  sql:
+    init:
+      mode: always
 management:
   server:
     port: ${MANAGEMENT_PORT:8090}
