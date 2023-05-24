@@ -5,7 +5,13 @@
  */
 package org.eclipse.tractusx.managedidentitywallets.swagger.api;
 
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.eclipse.tractusx.managedidentitywallets.swagger.model.DidDocumentDto;
 import org.eclipse.tractusx.managedidentitywallets.swagger.model.ExceptionResponse;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +22,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 @Validated
-@Api(value = "DidDocument", description = "the DidDocument API")
+@Tag(name = "DidDocument", description = "the DidDocument API")
 public interface DidDocumentApi {
 
-    @ApiOperation(value = "Resolve DID Document", nickname = "apiDidDocumentsIdentifierGet", notes = "Resolve the DID document for a given DID or BPN", response = DidDocumentDto.class, tags={ "DIDDocument", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "The resolved DID Document", response = DidDocumentDto.class),
-        @ApiResponse(code = 400, message = "The input does not comply to the syntax requirements", response = ExceptionResponse.class),
-        @ApiResponse(code = 404, message = "The required entity does not exists", response = ExceptionResponse.class) })
+    @Operation(summary = "Resolve DID Document", description = "Resolve the DID document for a given DID or BPN")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The resolved DID Document", content = @Content(schema = @Schema(implementation = DidDocumentDto.class))),
+            @ApiResponse(responseCode = "400", description = "The input does not comply to the syntax requirements", content = @Content(schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(responseCode = "404", description = "The required entity does not exists", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))})
     @RequestMapping(value = "/api/didDocuments/{identifier}",
-        produces = "application/json", 
-        method = RequestMethod.GET)
-    ResponseEntity<DidDocumentDto> apiDidDocumentsIdentifierGet(@ApiParam(value = "", required=true) @PathVariable("identifier") String identifier);
+            produces = "application/json",
+            method = RequestMethod.GET)
+    ResponseEntity<DidDocumentDto> apiDidDocumentsIdentifierGet(@Parameter(required = true) @PathVariable("identifier") String identifier);
 
 }
 

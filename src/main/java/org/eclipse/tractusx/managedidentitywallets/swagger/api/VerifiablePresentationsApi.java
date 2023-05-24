@@ -5,11 +5,14 @@
  */
 package org.eclipse.tractusx.managedidentitywallets.swagger.api;
 
-import io.swagger.annotations.*;
-import io.swagger.model.ExceptionResponse;
-import io.swagger.model.VerifiablePresentationDto;
-import io.swagger.model.VerifiablePresentationRequestDto;
-import io.swagger.model.VerifyResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.eclipse.tractusx.managedidentitywallets.swagger.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,34 +24,34 @@ import javax.validation.Valid;
 
 @javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 @Validated
-@Api(value = "VerifiablePresentations", description = "the VerifiablePresentations API")
+@Tag(name = "VerifiablePresentations", description = "the VerifiablePresentations API")
 public interface VerifiablePresentationsApi {
 
-    @ApiOperation(value = "Create Verifiable Presentation", nickname = "apiPresentationsPost", notes = "Permission: **update_wallets** OR **update_wallet** (The BPN of the issuer of the Verifiable Presentation must equal to BPN of caller)  Create a verifiable presentation from a list of verifiable credentials, signed by the holder", response = VerifiablePresentationDto.class, tags={ "VerifiablePresentations", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 201, message = "The created verifiable presentation", response = VerifiablePresentationDto.class),
-        @ApiResponse(code = 401, message = "The request could not be completed due to a failed authorization.", response = ExceptionResponse.class),
-        @ApiResponse(code = 403, message = "The request could not be completed due to a forbidden access.", response = ExceptionResponse.class),
-        @ApiResponse(code = 422, message = "The input can not be processed due to semantic mismatches", response = ExceptionResponse.class) })
+    @Operation(summary = "Create Verifiable Presentation", description = "Permission: **update_wallets** OR **update_wallet** (The BPN of the issuer of the Verifiable Presentation must equal to BPN of caller)  Create a verifiable presentation from a list of verifiable credentials, signed by the holder")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "The created verifiable presentation", content = @Content(schema = @Schema(implementation = VerifiablePresentationDto.class))),
+            @ApiResponse(responseCode = "401", description = "The request could not be completed due to a failed authorization.", content = @Content(schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(responseCode = "403", description = "The request could not be completed due to a forbidden access.", content = @Content(schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(responseCode = "422", description = "The input can not be processed due to semantic mismatches", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))})
     @RequestMapping(value = "/api/presentations",
-        produces = "application/json", 
-        consumes = "application/json",
-        method = RequestMethod.POST)
-    ResponseEntity<VerifiablePresentationDto> apiPresentationsPost(@ApiParam(value = "The verifiable presentation input data", required=true ) @Valid @RequestBody VerifiablePresentationRequestDto body, @ApiParam(value = "", defaultValue = "true") @Valid @RequestParam(value = "asJwt", required = false, defaultValue="true") Boolean asJwt, @ApiParam(value = "", defaultValue = "true") @Valid @RequestParam(value = "withCredentialsDateValidation", required = false, defaultValue="true") Boolean withCredentialsDateValidation, @ApiParam(value = "", defaultValue = "true") @Valid @RequestParam(value = "withCredentialsValidation", required = false, defaultValue="true") Boolean withCredentialsValidation, @ApiParam(value = "", defaultValue = "true") @Valid @RequestParam(value = "withRevocationValidation", required = false, defaultValue="true") Boolean withRevocationValidation);
+            produces = "application/json",
+            consumes = "application/json",
+            method = RequestMethod.POST)
+    ResponseEntity<VerifiablePresentationDto> apiPresentationsPost(@Parameter(description = "The verifiable presentation input data", required = true) @Valid @RequestBody VerifiablePresentationRequestDto body, @Parameter(schema = @Schema(defaultValue = "true")) @Valid @RequestParam(value = "asJwt", required = false, defaultValue = "true") Boolean asJwt, @Parameter(schema = @Schema(defaultValue = "true")) @Valid @RequestParam(value = "withCredentialsDateValidation", required = false, defaultValue = "true") Boolean withCredentialsDateValidation, @Parameter(schema = @Schema(defaultValue = "true")) @Valid @RequestParam(value = "withCredentialsValidation", required = false, defaultValue = "true") Boolean withCredentialsValidation, @Parameter(schema = @Schema(defaultValue = "true")) @Valid @RequestParam(value = "withRevocationValidation", required = false, defaultValue = "true") Boolean withRevocationValidation);
 
 
-    @ApiOperation(value = "Validate Verifiable Presentation", nickname = "apiPresentationsValidationPost", notes = "Permission: **view_wallets** OR **view_wallet**  Validate Verifiable Presentation with all included credentials", response = VerifyResponse.class, tags={ "VerifiablePresentations", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "The verification value", response = VerifyResponse.class),
-        @ApiResponse(code = 400, message = "The input does not comply to the syntax requirements", response = ExceptionResponse.class),
-        @ApiResponse(code = 401, message = "The request could not be completed due to a failed authorization.", response = ExceptionResponse.class),
-        @ApiResponse(code = 403, message = "The request could not be completed due to a forbidden access.", response = ExceptionResponse.class),
-        @ApiResponse(code = 422, message = "The input can not be processed due to semantic mismatches", response = ExceptionResponse.class) })
+    @Operation(summary = "Validate Verifiable Presentation", description = "Permission: **view_wallets** OR **view_wallet**  Validate Verifiable Presentation with all included credentials")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The verification value", content = @Content(schema = @Schema(implementation = SuccessResponse.class))),
+            @ApiResponse(responseCode = "400", description = "The input does not comply to the syntax requirements", content = @Content(schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(responseCode = "401", description = "The request could not be completed due to a failed authorization.", content = @Content(schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(responseCode = "403", description = "The request could not be completed due to a forbidden access.", content = @Content(schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(responseCode = "422", description = "The input can not be processed due to semantic mismatches", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))})
     @RequestMapping(value = "/api/presentations/validation",
-        produces = "application/json", 
-        consumes = "application/json",
-        method = RequestMethod.POST)
-    ResponseEntity<VerifyResponse> apiPresentationsValidationPost(@ApiParam(value = "The verifiable presentation to validate", required=true ) @Valid @RequestBody VerifiablePresentationDto body, @ApiParam(value = "", defaultValue = "false") @Valid @RequestParam(value = "withDateValidation", required = false, defaultValue="false") Boolean withDateValidation, @ApiParam(value = "", defaultValue = "true") @Valid @RequestParam(value = "withRevocationValidation", required = false, defaultValue="true") Boolean withRevocationValidation);
+            produces = "application/json",
+            consumes = "application/json",
+            method = RequestMethod.POST)
+    ResponseEntity<VerifyResponse> apiPresentationsValidationPost(@Parameter(description = "The verifiable presentation to validate", required = true) @Valid @RequestBody VerifiablePresentationDto body, @Parameter(schema = @Schema(defaultValue = "false")) @Valid @RequestParam(value = "withDateValidation", required = false, defaultValue = "false") Boolean withDateValidation, @Parameter(schema = @Schema(defaultValue = "true")) @Valid @RequestParam(value = "withRevocationValidation", required = false, defaultValue = "true") Boolean withRevocationValidation);
 
 }
 
