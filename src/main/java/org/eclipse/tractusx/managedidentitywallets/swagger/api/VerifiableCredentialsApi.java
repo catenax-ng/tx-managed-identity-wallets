@@ -6,7 +6,7 @@
 package org.eclipse.tractusx.managedidentitywallets.swagger.api;
 
 import io.swagger.annotations.*;
-import io.swagger.model.*;
+import org.eclipse.tractusx.managedidentitywallets.swagger.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
