@@ -11,7 +11,7 @@ import java.util.Objects;
  * LdProofDto
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class LdProofDto   {
@@ -39,7 +39,7 @@ public class LdProofDto   {
    * Get type
    * @return type
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getType() {
@@ -59,7 +59,7 @@ public class LdProofDto   {
    * Get created
    * @return created
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getCreated() {
@@ -79,7 +79,7 @@ public class LdProofDto   {
    * Get verificationMethod
    * @return verificationMethod
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getVerificationMethod() {
@@ -99,7 +99,7 @@ public class LdProofDto   {
    * Get proofPurpose
    * @return proofPurpose
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getProofPurpose() {
@@ -119,7 +119,7 @@ public class LdProofDto   {
    * Get proofValue
    * @return proofValue
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getProofValue() {
     return proofValue;

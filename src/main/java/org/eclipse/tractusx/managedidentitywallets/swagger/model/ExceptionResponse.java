@@ -11,7 +11,7 @@ import java.util.Objects;
  * ExceptionResponse
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class ExceptionResponse   {
@@ -30,7 +30,7 @@ public class ExceptionResponse   {
    * Get error
    * @return error
    **/
-  @Schema(description = "")
+  @Schema()
   
     public Boolean isError() {
     return error;
@@ -49,7 +49,7 @@ public class ExceptionResponse   {
    * Get message
    * @return message
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getMessage() {

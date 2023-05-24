@@ -3,7 +3,6 @@ package org.eclipse.tractusx.managedidentitywallets.swagger.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
-import org.threeten.bp.LocalDate;
 
 import javax.validation.Valid;
 import java.util.Objects;
@@ -12,7 +11,7 @@ import java.util.Objects;
  * LocalDateTime
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class LocalDateTime   {
@@ -31,7 +30,7 @@ public class LocalDateTime   {
    * Get date
    * @return date
    **/
-  @Schema(description = "")
+  @Schema()
   
     @Valid
     public LocalDate getDate() {
@@ -51,7 +50,7 @@ public class LocalDateTime   {
    * Get time
    * @return time
    **/
-  @Schema(description = "")
+  @Schema()
   
     @Valid
     public LocalTime getTime() {

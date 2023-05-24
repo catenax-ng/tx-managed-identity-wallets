@@ -11,7 +11,7 @@ import java.util.Objects;
  * SuccessResponse
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class SuccessResponse   {
@@ -27,7 +27,7 @@ public class SuccessResponse   {
    * Get message
    * @return message
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getMessage() {

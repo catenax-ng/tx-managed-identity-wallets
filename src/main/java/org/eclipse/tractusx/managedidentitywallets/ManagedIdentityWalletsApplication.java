@@ -23,7 +23,6 @@ package org.eclipse.tractusx.managedidentitywallets;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
 /**
@@ -31,9 +30,6 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
  */
 @SpringBootApplication
 @EnableOpenApi
-@ComponentScan(basePackages = { "org.eclipse.tractusx.managedidentitywallets.swagger",
-		"org.eclipse.tractusx.managedidentitywallets.swagger.api",
-		"org.eclipse.tractusx.managedidentitywallets.swagger.configuration"})
 public class ManagedIdentityWalletsApplication {
 
 	/**
@@ -44,13 +40,4 @@ public class ManagedIdentityWalletsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ManagedIdentityWalletsApplication.class, args);
 	}
-
-	/*@Configuration
-	static class CustomDateConfig extends WebMvcConfigurerAdapter {
-		@Override
-		public void addFormatters(FormatterRegistry registry) {
-			registry.addConverter(new LocalDateConverter("yyyy-MM-dd"));
-			registry.addConverter(new LocalDateTimeConverter("yyyy-MM-dd'T'HH:mm:ss.SSS"));
-		}
-	}*/
 }

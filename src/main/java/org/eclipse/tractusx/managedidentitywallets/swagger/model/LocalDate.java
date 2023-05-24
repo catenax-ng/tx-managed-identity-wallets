@@ -11,7 +11,7 @@ import java.util.Objects;
  * LocalDate
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class LocalDate   {
@@ -33,7 +33,7 @@ public class LocalDate   {
    * Get year
    * @return year
    **/
-  @Schema(description = "")
+  @Schema()
   
     public Integer getYear() {
     return year;
@@ -52,7 +52,7 @@ public class LocalDate   {
    * Get month
    * @return month
    **/
-  @Schema(description = "")
+  @Schema()
   
     @Valid
     public ModelShort getMonth() {
@@ -72,7 +72,7 @@ public class LocalDate   {
    * Get day
    * @return day
    **/
-  @Schema(description = "")
+  @Schema()
   
     @Valid
     public ModelShort getDay() {

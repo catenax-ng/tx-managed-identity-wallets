@@ -11,7 +11,7 @@ import java.util.Objects;
  * LocalTime
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class LocalTime   {
@@ -36,7 +36,7 @@ public class LocalTime   {
    * Get hour
    * @return hour
    **/
-  @Schema(description = "")
+  @Schema()
   
     @Valid
     public ModelShort getHour() {
@@ -56,7 +56,7 @@ public class LocalTime   {
    * Get minute
    * @return minute
    **/
-  @Schema(description = "")
+  @Schema()
   
     @Valid
     public ModelShort getMinute() {
@@ -76,7 +76,7 @@ public class LocalTime   {
    * Get second
    * @return second
    **/
-  @Schema(description = "")
+  @Schema()
   
     @Valid
     public ModelShort getSecond() {
@@ -96,7 +96,7 @@ public class LocalTime   {
    * Get nano
    * @return nano
    **/
-  @Schema(description = "")
+  @Schema()
   
     public Integer getNano() {
     return nano;

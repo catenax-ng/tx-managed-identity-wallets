@@ -12,7 +12,7 @@ import java.util.*;
  * PublicKeyJwkDto
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class PublicKeyJwkDto   {
@@ -62,7 +62,7 @@ public class PublicKeyJwkDto   {
    * Get additionalAttributes
    * @return additionalAttributes
    **/
-  @Schema(description = "")
+  @Schema()
       @Valid
     public Map<String, Any> getAdditionalAttributes() {
     return additionalAttributes;
@@ -81,7 +81,7 @@ public class PublicKeyJwkDto   {
    * Get alg
    * @return alg
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getAlg() {
     return alg;
@@ -100,7 +100,7 @@ public class PublicKeyJwkDto   {
    * Get crv
    * @return crv
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getCrv() {
     return crv;
@@ -127,7 +127,7 @@ public class PublicKeyJwkDto   {
    * Get keyOps
    * @return keyOps
    **/
-  @Schema(description = "")
+  @Schema()
   
     public List<String> getKeyOps() {
     return keyOps;
@@ -146,7 +146,7 @@ public class PublicKeyJwkDto   {
    * Get kid
    * @return kid
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getKid() {
     return kid;
@@ -165,7 +165,7 @@ public class PublicKeyJwkDto   {
    * Get kty
    * @return kty
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getKty() {
@@ -185,7 +185,7 @@ public class PublicKeyJwkDto   {
    * Get use
    * @return use
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getUse() {
     return use;
@@ -204,7 +204,7 @@ public class PublicKeyJwkDto   {
    * Get x
    * @return x
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getX() {
     return x;
@@ -223,7 +223,7 @@ public class PublicKeyJwkDto   {
    * Get y
    * @return y
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getY() {
     return y;

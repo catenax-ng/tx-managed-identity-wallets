@@ -14,7 +14,7 @@ import java.util.Objects;
  * VerifiablePresentationRequestDto
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class VerifiablePresentationRequestDto   {
@@ -34,7 +34,7 @@ public class VerifiablePresentationRequestDto   {
    * Get holderIdentifier
    * @return holderIdentifier
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getHolderIdentifier() {
@@ -59,7 +59,7 @@ public class VerifiablePresentationRequestDto   {
    * Get verifiableCredentials
    * @return verifiableCredentials
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
     @Valid
     public List<VerifiableCredentialDto> getVerifiableCredentials() {

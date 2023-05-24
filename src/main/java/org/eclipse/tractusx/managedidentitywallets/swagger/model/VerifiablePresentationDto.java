@@ -14,7 +14,7 @@ import java.util.Objects;
  * VerifiablePresentationDto
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class VerifiablePresentationDto   {
@@ -53,7 +53,7 @@ public class VerifiablePresentationDto   {
    * Get _atContext
    * @return _atContext
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public List<String> getAtContext() {
@@ -73,7 +73,7 @@ public class VerifiablePresentationDto   {
    * Get holder
    * @return holder
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getHolder() {
     return holder;
@@ -92,7 +92,7 @@ public class VerifiablePresentationDto   {
    * Get id
    * @return id
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getId() {
     return id;
@@ -111,7 +111,7 @@ public class VerifiablePresentationDto   {
    * Get proof
    * @return proof
    **/
-  @Schema(description = "")
+  @Schema()
   
     @Valid
     public LdProofDto getProof() {
@@ -136,7 +136,7 @@ public class VerifiablePresentationDto   {
    * Get type
    * @return type
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public List<String> getType() {
@@ -164,7 +164,7 @@ public class VerifiablePresentationDto   {
    * Get verifiableCredential
    * @return verifiableCredential
    **/
-  @Schema(description = "")
+  @Schema()
       @Valid
     public List<VerifiableCredentialDto> getVerifiableCredential() {
     return verifiableCredential;

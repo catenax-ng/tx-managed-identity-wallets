@@ -12,7 +12,7 @@ import java.util.Objects;
  * DidVerificationMethodDto
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class DidVerificationMethodDto   {
@@ -52,10 +52,10 @@ public class DidVerificationMethodDto   {
    * Get controller
    * @return controller
    **/
-  @Schema(required = true, description = "")
-      @NotNull
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull
 
-    public String getController() {
+  public String getController() {
     return controller;
   }
 
@@ -72,7 +72,7 @@ public class DidVerificationMethodDto   {
    * Get id
    * @return id
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getId() {
@@ -92,7 +92,7 @@ public class DidVerificationMethodDto   {
    * Get publicKeyBase58
    * @return publicKeyBase58
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getPublicKeyBase58() {
     return publicKeyBase58;
@@ -111,7 +111,7 @@ public class DidVerificationMethodDto   {
    * Get publicKeyBase64
    * @return publicKeyBase64
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getPublicKeyBase64() {
     return publicKeyBase64;
@@ -130,7 +130,7 @@ public class DidVerificationMethodDto   {
    * Get publicKeyHex
    * @return publicKeyHex
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getPublicKeyHex() {
     return publicKeyHex;
@@ -149,7 +149,7 @@ public class DidVerificationMethodDto   {
    * Get publicKeyJwk
    * @return publicKeyJwk
    **/
-  @Schema(description = "")
+  @Schema()
   
     @Valid
     public PublicKeyJwkDto getPublicKeyJwk() {
@@ -169,7 +169,7 @@ public class DidVerificationMethodDto   {
    * Get publicKeyMultibase
    * @return publicKeyMultibase
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getPublicKeyMultibase() {
     return publicKeyMultibase;
@@ -188,7 +188,7 @@ public class DidVerificationMethodDto   {
    * Get publicKeyPem
    * @return publicKeyPem
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getPublicKeyPem() {
     return publicKeyPem;
@@ -207,7 +207,7 @@ public class DidVerificationMethodDto   {
    * Get type
    * @return type
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getType() {

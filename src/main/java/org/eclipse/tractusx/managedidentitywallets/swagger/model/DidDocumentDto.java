@@ -14,7 +14,7 @@ import java.util.Objects;
  * DidDocumentDto
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class DidDocumentDto   {
@@ -68,7 +68,7 @@ public class DidDocumentDto   {
    * Get alsoKnownAs
    * @return alsoKnownAs
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getAlsoKnownAs() {
     return alsoKnownAs;
@@ -95,7 +95,7 @@ public class DidDocumentDto   {
    * Get assertionMethodVerificationMethods
    * @return assertionMethodVerificationMethods
    **/
-  @Schema(description = "")
+  @Schema()
       @Valid
     public List<Any> getAssertionMethodVerificationMethods() {
     return assertionMethodVerificationMethods;
@@ -122,7 +122,7 @@ public class DidDocumentDto   {
    * Get authenticationVerificationMethods
    * @return authenticationVerificationMethods
    **/
-  @Schema(description = "")
+  @Schema()
       @Valid
     public List<Any> getAuthenticationVerificationMethods() {
     return authenticationVerificationMethods;
@@ -149,7 +149,7 @@ public class DidDocumentDto   {
    * Get capabilityDelegationVerificationMethods
    * @return capabilityDelegationVerificationMethods
    **/
-  @Schema(description = "")
+  @Schema()
       @Valid
     public List<Any> getCapabilityDelegationVerificationMethods() {
     return capabilityDelegationVerificationMethods;
@@ -176,7 +176,7 @@ public class DidDocumentDto   {
    * Get capabilityInvocationVerificationMethods
    * @return capabilityInvocationVerificationMethods
    **/
-  @Schema(description = "")
+  @Schema()
       @Valid
     public List<Any> getCapabilityInvocationVerificationMethods() {
     return capabilityInvocationVerificationMethods;
@@ -200,7 +200,7 @@ public class DidDocumentDto   {
    * Get context
    * @return context
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public List<String> getContext() {
@@ -220,7 +220,7 @@ public class DidDocumentDto   {
    * Get controller
    * @return controller
    **/
-  @Schema(description = "")
+  @Schema()
   
     @Valid
     public ModelShort getController() {
@@ -240,7 +240,7 @@ public class DidDocumentDto   {
    * Get id
    * @return id
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getId() {
@@ -268,7 +268,7 @@ public class DidDocumentDto   {
    * Get keyAgreementVerificationMethods
    * @return keyAgreementVerificationMethods
    **/
-  @Schema(description = "")
+  @Schema()
       @Valid
     public List<Any> getKeyAgreementVerificationMethods() {
     return keyAgreementVerificationMethods;
@@ -295,7 +295,7 @@ public class DidDocumentDto   {
    * Get services
    * @return services
    **/
-  @Schema(description = "")
+  @Schema()
   
     public List<Object> getServices() {
     return services;
@@ -322,7 +322,7 @@ public class DidDocumentDto   {
    * Get verificationMethods
    * @return verificationMethods
    **/
-  @Schema(description = "")
+  @Schema()
       @Valid
     public List<DidVerificationMethodDto> getVerificationMethods() {
     return verificationMethods;

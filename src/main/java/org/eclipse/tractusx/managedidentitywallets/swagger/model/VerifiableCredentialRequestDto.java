@@ -12,7 +12,7 @@ import java.util.*;
  * VerifiableCredentialRequestDto
  */
 @Validated
-@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-22T13:09:57.551136732Z[GMT]")
+@javax.annotation.processing.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-05-24T08:44:38.406697803Z[GMT]")
 
 
 public class VerifiableCredentialRequestDto   {
@@ -60,7 +60,7 @@ public class VerifiableCredentialRequestDto   {
    * Get _atContext
    * @return _atContext
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public List<String> getAtContext() {
@@ -85,7 +85,7 @@ public class VerifiableCredentialRequestDto   {
    * Get credentialSubject
    * @return credentialSubject
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
     @Valid
     public Map<String, Any> getCredentialSubject() {
@@ -105,7 +105,7 @@ public class VerifiableCredentialRequestDto   {
    * Get expirationDate
    * @return expirationDate
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getExpirationDate() {
     return expirationDate;
@@ -124,7 +124,7 @@ public class VerifiableCredentialRequestDto   {
    * Get holderIdentifier
    * @return holderIdentifier
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getHolderIdentifier() {
     return holderIdentifier;
@@ -143,7 +143,7 @@ public class VerifiableCredentialRequestDto   {
    * Get id
    * @return id
    **/
-  @Schema(description = "")
+  @Schema()
   
     public String getId() {
     return id;
@@ -162,7 +162,7 @@ public class VerifiableCredentialRequestDto   {
    * Get isRevocable
    * @return isRevocable
    **/
-  @Schema(description = "")
+  @Schema()
   
     public Boolean isIsRevocable() {
     return isRevocable;
@@ -181,7 +181,7 @@ public class VerifiableCredentialRequestDto   {
    * Get issuanceDate
    * @return issuanceDate
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getIssuanceDate() {
@@ -201,7 +201,7 @@ public class VerifiableCredentialRequestDto   {
    * Get issuerIdentifier
    * @return issuerIdentifier
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public String getIssuerIdentifier() {
@@ -226,7 +226,7 @@ public class VerifiableCredentialRequestDto   {
    * Get type
    * @return type
    **/
-  @Schema(required = true, description = "")
+  @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
       @NotNull
 
     public List<String> getType() {
