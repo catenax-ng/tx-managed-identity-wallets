@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: managed-identity-wallets
+  name: {{ include "managed-identity-wallets.fullname" . }}
   namespace: {{ .Release.Namespace }}  
 spec:
   type: ClusterIP
@@ -13,7 +13,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: managed-identity-wallets-acapy-base
+  name: {{ include "managed-identity-wallets.fullname" . }}-acapy-base
 spec:
   type: ClusterIP
   ports:
@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: managed-identity-wallets-acapy-mt
+  name: {{ include "managed-identity-wallets.fullname" . }}-acapy-mt
 spec:
   type: ClusterIP
   ports:

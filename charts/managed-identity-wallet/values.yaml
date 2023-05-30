@@ -28,7 +28,6 @@ allowEmptyPassword: "\"yes\""
 db:
   # -- Database driver to use
   jdbcDriver: "org.postgresql.Driver"
-namespace: "managed-identity-wallets"
 # -- The logging configurations
 logging:
   exposed: "INFO"

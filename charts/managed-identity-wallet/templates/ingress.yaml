@@ -3,8 +3,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: managed-identity-wallets-ingress
-  namespace: {{ .Values.Namespace }}
+  name: {{ include "managed-identity-wallets.fullname" . }}-ingress
+  namespace: {{ .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -35,7 +35,7 @@ spec:
             pathType: Exact
             backend:
               service:
-                name: managed-identity-wallets-acapy-base
+                name: {{ include "managed-identity-wallets.fullname" . }}-acapy-base
                 port:
                   number: 8000
     - host: {{ .Values.certificate.host }}
@@ -45,7 +45,7 @@ spec:
             pathType: Exact
             backend:
               service:
-                name: managed-identity-wallets-acapy-mt
+                name: {{ include "managed-identity-wallets.fullname" . }}-acapy-mt
                 port:
                   number: 8003
     - host: {{ .Values.certificate.host }}
@@ -55,7 +55,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: managed-identity-wallets
+                name: {{ include "managed-identity-wallets.fullname" . }}
                 port:
                   number: 8080
   tls:
