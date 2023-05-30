@@ -1,6 +1,3 @@
-###
-### DEPRECATED
-###
 auth:
   jwksUrl: "https://centralidp.dev.demo.catena-x.net/auth/realms/CX-Central/protocol/openid-connect/certs"
   issuerUrl: "https://centralidp.dev.demo.catena-x.net/auth/realms/CX-Central"
@@ -55,12 +52,16 @@ managedIdentityWallets:
     bpdmauthclientid: <path:managed-identity-wallets/data/dev/managed-identity-wallets-secrets#bpdm-auth-client-id>
     bpdmauthclientsecret: <path:managed-identity-wallets/data/dev/managed-identity-wallets-secrets#bpdm-auth-client-secret>
 postgresql:
+  auth:
+    existingSecret: managed-identity-wallets-new-postgresql
   useDefaultJdbcUrl: false
   secret:
     password: <path:managed-identity-wallets/data/dev/postgres-managed-identity-wallets-secret-config#password>
     postgrespassword: <path:managed-identity-wallets/data/dev/postgres-managed-identity-wallets-secret-config#postgres-password>
     user: <path:managed-identity-wallets/data/dev/postgres-managed-identity-wallets-secret-config#user>
 acapypostgresql:
+  auth:
+    existingSecret: managed-identity-wallets-new-acapypostgresql
   secret:
     password: <path:managed-identity-wallets/data/dev/postgres-acapy-secret-config#password>
     postgrespassword: <path:managed-identity-wallets/data/dev/postgres-acapy-secret-config#postgres-password>
