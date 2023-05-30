@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: managed-identity-wallet-new
+  name: managed-identity-wallets-new
 spec:
   destination:
-    namespace: product-managed-identity-wallet-new
+    namespace: product-managed-identity-wallets
     server: 'https://kubernetes.default.svc'
   source:
     repoURL: 'https://github.com/catenax-ng/product-core-managed-identity-wallets.git'
-    path: helm/managed-identity-wallet
-    targetRevision: develop
+    path: charts/managed-identity-wallet
+    targetRevision: main
     helm:
       valueFiles:
         - values.yaml
@@ -19,4 +19,4 @@ spec:
       env:
         - name: AVP_SECRET
           value: vault-secret
-  project: project-managed-identity-wallet
+  project: project-managed-identity-wallets
