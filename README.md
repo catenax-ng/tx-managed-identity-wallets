@@ -100,6 +100,7 @@ Overview by Endpoint
 
 
 
+
 Additionally a Token mapper can be created under *Clients* &gt;
 *ManagedIdentityWallets* &gt; *Mappers* &gt; *create* with the following
 configuration (using as an example `BPNL000000001`):
