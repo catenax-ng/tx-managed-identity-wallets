@@ -1,430 +1,197 @@
-# Managed Identity Wallets <a id="introduction"></a>
+# Managed Identity Wallets `<a id="introduction"></a>`
 
-The Managed Identity Wallets (MIW) service implements the Self-Sovereign-Identity (SSI) readiness by providing a wallet hosting platform including a DID resolver,service endpoints and the company wallets itself.
-
-Technically this project is developed using the [ktor](https://ktor.io) Microservices
-framework and thus the Kotlin language. It is using [gradle](https://gradle.org/) as
-build system. To store the wallets and communicate with an external ledger MIW is using
-[Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python) with
-it's [multi-tenant feature](https://github.com/hyperledger/aries-cloudagent-python/blob/main/Multitenancy.md)
-and [JSON-LD credential](https://github.com/hyperledger/aries-cloudagent-python/blob/main/JsonLdCredentials.md)
-To support credential revocation MIW is using the revocation service within the
-[GXFS Notarization API/Service](https://gitlab.com/gaia-x/data-infrastructure-federation-services/not/notarization-service/-/tree/main/services/revocation)
-> **Warning**
-> This is not yet ready for production usage, as
-> [Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python)
-> does not support `did:indy` resolution yet. This disclaimer will be removed,
-> once it is available.https://img.shields.io/badge/Version-0.7.7-informational
+The Managed Identity Wallets (MIW) service implements the Self-Sovereign-Identity (SSI) using did:web
 
 # Developer Documentation
 
-To run MIW locally, this section describes the tooling as well as
-the local development setup.
+To run MIW locally, this section describes the tooling as well as the local development setup.
+
+There are two possible flows, which can be used for development:
+
+1. **local**: Run the postgresql and keycloak server inside docker. Start MIW from within your IDE (recommended for actual development)
+2. **docker**: Run everything inside docker (use to test or check behavior inside a docker environment)
+
 ## Tooling
 
 Following tools the MIW development team used successfully:
 
-| Area        | Tool               | Download Link    | Comment     |
-|-------------|--------------------|------------------|-------------|
-| IDE         | IntelliJ           | https://www.jetbrains.com/idea/download/ | Additionally the [envfile plugin](https://plugins.jetbrains.com/plugin/7861-envfile) is suggested |
-|             | Visual Studio Code | https://code.visualstudio.com/download | Test with version 1.71.2, additionally Git, Kotlin, Kubernetes plugins are suggested |
-| Build       | Gradle             | https://gradle.org/install/ | Tested with version 7.3.3 |
-| Runtime     | Docker Desktop     | https://www.docker.com/products/docker-desktop/ | |
-|             | Rancher Desktop    | https://rancherdesktop.io | Tested with version 1.5.1, and Docker cli version `Docker version 20.10.17-rd, build c2e4e01` and Docker Compose cli version `Docker Compose version v2.6.1` |
-| API Testing | Postman            | https://www.postman.com/downloads/ | Tested with version 9.31.0 |
-| Database    | DBeaver            | https://dbeaver.io/ | Tested with version 22.2.0.202209051344 |
-
-## Environment Variables <a id= "environmentVariables"></a>
-
-Please see the file `.env.example` for the environment examples that are used
-below. Here a few hints on how to set it up:
-
-| Key                       | Type   | Description                                                                                                                                             |
-|---------------------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `MIW_DB_JDBC_URL`          | URL    | database connection string, most commonly postgreSQL is used                                                                                            |
-| `MIW_DB_JDBC_DRIVER`       | URL    | database driver to use, most commonly postgreSQL is used                                                                                                |
-| `MIW_AUTH_JWKS_URL`        | URL    | IAM certs url                                                                                                                                           |
-| `MIW_AUTH_ISSUER_URL`      | URL    | IAM token issuer url                                                                                                                                    |
-| `MIW_AUTH_REDIRECT_URL`    | URL    | IAM redirect url to the MIW                                                                                                                             |
-| `MIW_AUTH_REALM`           | String | IAM realm                                                                                                                                               |
-| `MIW_AUTH_ROLE_MAPPINGS`   | String | IAM role mapping                                                                                                                                        |
-| `MIW_AUTH_RESOURCE_ID`     | String | IAM resource id                                                                                                                                         |
-| `MIW_AUTH_CLIENT_ID`       | String | IAM client id                                                                                                                                           |
-| `MIW_AUTH_CLIENT_SECRET`   | String | It can be extracted from keycloak under *realms* &gt;*localkeycloak* &gt; *clients* &gt; *ManagedIdentityWallets* &gt; *credentials*                    |
-| `APP_VERSION`             | String | application version, this should be in-line with the version in the deployment                                                                          |
-| `ACAPY_API_ADMIN_URL`     | String | admin url of ACA-Py                                                                                                                                     |
-| `ACAPY_ADMIN_API_KEY`     | String | admin api key of ACA-Py endpoints                                                                                                                       |
-| `ACAPY_BASE_WALLET_API_ADMIN_URL`     | String | admin url of the base endorser ACA-Py                                                                                                                   |
-| `ACAPY_BASE_WALLET_ADMIN_API_KEY`     | String | admin api key of the base endorser ACA-Py endpoints                                                                                                     |
-| `LOG_LEVEL_KTOR_ROOT`     | String | the log level of Ktor                                                                                                                                   |
-| `LOG_LEVEL_NETTY`     | String | the log level of used netty server                                                                                                                      |
-| `LOG_LEVEL_ECLIPSE_JETTY`     | String | the log level of used eclipse jetty                                                                                                                     |
-| `LOG_LEVEL_EXPOSED`     | String | the log level of used exposed framework                                                                                                                 |
-| `LOG_LEVEL_SERVICES_CALLS`     | String | the log level of http client used in internal services. OPTIONS: ALL, HEADERS, BODY, INFO, NONE                                                         |
-| `WALLET_SERVICE_REQUEST_TIMEOUT`     | String | the timeout of request in http client of the wallet service in milli seconds                                                                            |
-| `WALLET_SERVICE_CONNECT_TIMEOUT`     | String | the timeout of connect in http client of the wallet service in milli seconds                                                                            |
-| `WALLET_SERVICE_SOCKET_TIMEOUT`     | String | the timeout of socket in http client of the wallet service in milli seconds                                                                             |
-| `BPD_SERVICE_REQUEST_TIMEOUT`     | String | the timeout of request in http client of the BPD service in milli seconds                                                                               |
-| `BPD_SERVICE_CONNECT_TIMEOUT`     | String | the timeout of connect in http client of the BPD service in milli seconds                                                                               |
-| `BPD_SERVICE_SOCKET_TIMEOUT`     | String | the timeout of socket in http client of the BPD service in milli seconds                                                                                |
-| `REVOCATION_SERVICE_REQUEST_TIMEOUT`     | String | the timeout of request in http client of the revocation service in milli seconds                                                                        |
-| `REVOCATION_SERVICE_CONNECT_TIMEOUT`     | String | the timeout of connect in http client of the revocation service in milli seconds                                                                        |
-| `REVOCATION_SERVICE_SOCKET_TIMEOUT`     | String | the timeout of socket in http client of the revocation service in milli seconds                                                                         |
-| `WEBHOOK_SERVICE_REQUEST_TIMEOUT`     | String | the timeout of request in http client of the webhook service in milli seconds                                                                        |
-| `WEBHOOK_SERVICE_CONNECT_TIMEOUT`     | String | the timeout of connect in http client of the webhook service in milli seconds                                                                        |
-| `WEBHOOK_SERVICE_SOCKET_TIMEOUT`     | String | the timeout of socket in http client of the webhook service in milli seconds                                                                            |
-| `ACAPY_NETWORK_IDENTIFIER`| String | Hyperledger Indy name space                                                                                                                             |
-| `MIW_BPN`                  | String | BPN of the base wallet                                                                                                                                  |
-| `MIW_DID`                  | String | DID of the base wallet, this wallet must be registered on ledger with the endorser role                                                                 |
-| `MIW_VERKEY`               | String | Verification key of the base wallet, this wallet must be registered on ledger with the endorser role                                                    |
-| `MIW_NAME`                 | String | Name of the base wallet                                                                                                                                 |
-|`MIW_ALLOWLIST_DIDS`       | String | List of full DIDs seperated by comma ",". Those DIDs are allowed to send a connection request to managed wallets. Empty for public invitation allowance |
-| `MIW_MEMBERSHIP_ORG`  | String | The name used in the Membership credential                                                                                                              |
-| `BPDM_DATAPOOL_URL`       | String | BPDM data pool API endpoint                                                                                                                             |
-| `BPDM_AUTH_CLIENT_ID`     | String | client id for accessing the BPDM data pool endpoint                                                                                                     |
-| `BPDM_AUTH_CLIENT_SECRET` | String | client secret for accessing the BPDM data pool endpoint                                                                                                 |
-| `BPDM_AUTH_GRANT_TYPE`    | String | grant type for accessing the BPDM data pool endpoint                                                                                                    |
-| `BPDM_AUTH_SCOPE`         | String | openid scope for accessing the BPDM data pool endpoint                                                                                                  |
-| `BPDM_AUTH_URL`           | String | IAM url to get the access token for BPDM data pool endpoint                                                                                             |
-| `BPDM_PULL_DATA_AT_HOUR`  | String | At which hour (24-hour clock) the cron job should pull the data from the BPDM data pool                                                                 |
-| `REVOCATION_URL`          | String | URL of the revocation service                                                                                                                           |
-| `REVOCATION_CREATE_STATUS_LIST_CREDENTIAL_AT_HOUR` | String | At which hour (24-hour clock) the cron job should issue/update status-list credentials                                                                  |
-
-## Local Development Setup
-
-To get a full development environment up (first with a in-memory database)
-run following these steps:
-
-1. Clone the GitHub repository
-
-    ```bash
-    git clone https://github.com/eclipse-tractusx/managed-identity-wallets.git
-    cd managed-identity-wallets
-    ```
-
-1. The setup requires 3 DIDs. The first DID will be the DID of the base wallet. The second DID is used in the management wallet of the multi-tenancy instance. The third DID is optional and needed only when the external/self-managed instance is used. To generate the required DIDs follow the steps in section [Integrate with Indy Ledger](##Integrate-with-Indy-Ledger)
-
-1. Copy over the `.env.example` to `dev.env`
-
-    ```bash
-    cp .env.example dev.env
-    ```
-
-1. Replace the placeholders in `dev.env` and then run
-
-    ```bash
-    set -a; source dev.env; set +a
-    ```
-
-    Note that this command needs to be run again after changing any value in `dev.env`.
-
-1. Start the supporting containers for postgreSQL (database), keycloak (identity
-management), ACA-Py (ledger communication) and revocation service (credential
-revocation handling)
-
-    ```bash
-    cd dev-assets/dev-containers
-    docker compose up -d
-    ```
-
-    You can stop the containers via `docker compose down -v`
-
-1. Run the MIW service from the project rootfolder via (on MacOS)
-
-    ```bash
-    cd ../../
-    ./gradlew run
-    ```
-
-    or respectively run `Application.kt` within in your IDE (using `dev.env` as configuration).
-
-1. :tada: **First milestone reached the MIW service is up and running!**
-
-
-## Advanced Development Setup
-
-With the following steps you can explore the API 
-
-1. Start Postman and add the environment `Managed_Identity_Wallet_Local.postman_environment` and the collection `Managed_Identity_Wallet.postman_collection` from ./dev-assets/
-    1. In the added environment make sure that the client_id and client_secret are the same as in your `dev.env` configuration.
-
-    1. Issue Status-List Credential by sending a POST request to `/api/credentials/revocations/statusListCredentialRefresh`. This step is temporary until the update to Ktor 2.x
-
-1. The two Postman collections `Base_Wallet_Acapy.postman_collection` and `Managed_Wallets_Acapy.postman_collection` are additional for debugging purposes. these collections include direct calls to the admin API of the Base AcaPy instance and the Multi-tenancy AcaPy instance.
-
-1. The Postman collection `Test-Acapy-SelfManagedWallet-Or-ExternalWallet.postman_collection` sends requests to the external AcaPy instance that simulate an external wallet or self managed wallet.
-
-1. :tada: **Second milestone reached: Your own wallet!**
-
-Now you have achieved the following:
-
-* set up the development environment to run it from source
-* initialized the base wallet and its revocation list
-* you can retrieve the list of wallets in Postman via the *Get wallets from Managed Identity Wallets*
-
-## Setup Summary
-
-| Service               | URL                     | Description |
-|-----------------------|-------------------------|-------------|
-| postgreSQL database   | port 5432 on `localhost`| within the Docker Compose setup |
-| Keycloak              | http://localhost:8081/  | within the Docker Compose setup, username: `admin` and password: `changeme`, client id: `ManagedIdentityWallets` and client secret can be found under the Clients &gt; ManagedIdentityWallets &gt; Credentials |
-| revocation service    | http://localhost:8086   | within the Docker Compose setup |
-| ACA-Py for Base Endorser Wallet | http://localhost:10000  | within the Docker Compose setup |
-| ACA-Py Multi-tenancy for Managed Wallets | http://localhost:10003  | within the Docker Compose setup |
-| MIW service           | http://localhost:8080/  | |
-| ACA-Py (External Wallet) | http://localhost:10001  | within the Docker Compose setup |
+| Area     | Tool     | Download Link                                   | Comment                                                                                             |
+| -------- | -------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| IDE      | IntelliJ | https://www.jetbrains.com/idea/download/        | Use[envfile plugin](https://plugins.jetbrains.com/plugin/7861-envfile) to use the **local** flow |
+| Build    | Gradle   | https://gradle.org/install/                     |                                                                                                     |
+| Runtime  | Docker   | https://www.docker.com/products/docker-desktop/ |                                                                                                     |
+| Database | DBeaver  | https://dbeaver.io/                             |                                                                                                     |
+| IAM      | Keycloak | https://www.keycloak.org/                       |                                                                                                     |
 
 # Administrator Documentation
 
 ## Manual Keycloak Configuration
 
-Within the development setup the Keycloak is initially prepared with the
-values in `./dev-assets/dev-containers/keycloak`. The realm could also be
-manually added and configured at http://localhost:8081 via the "Add realm"
+Within the development setup the Keycloak instance is initially prepared with the
+values in `./dev-assets/docker-environment/keycloak`. The realm could also be
+manually added and configured at http://localhost:8080 via the "Add realm"
 button. It can be for example named `localkeycloak`. Also add an additional client,
-e.g. named `ManagedIdentityWallets` with *valid redirect url* set to
+e.g. named `miw_private_client` with *valid redirect url* set to
 `http://localhost:8080/*`. The roles
- * add_wallets
- * view_wallets
- * update_wallets
- * delete_wallets
- * view_wallet
- * update_wallet
-can be added under *Clients > ManagedIdentityWallets > Roles* and then
-assigned to the client using *Clients > ManagedIdentityWallets > Client Scopes*
-*> Service Account Roles > Client Roles > ManagedIdentityWallets*. The
-available scopes/roles are:
+
+* add_wallets
+* view_wallets
+* update_wallets
+* delete_wallets
+* view_wallet
+* update_wallet
+* manage_app
+
+Roles can be added under *Clients > miw_private_client > Roles* and then
+assigned to the client using *Clients > miw_private_client > Client Scopes*
+*> Service Account Roles > Client Roles > miw_private_client*.
+
+The available scopes/roles are:
 
 1. Role `add_wallets` to create a new wallet
+2. Role `view_wallets`:
 
-1. Role `view_wallets`:
-    * to get a list of all wallets
-    * to retrieve one wallet by its identifier
-    * to validate a Verifiable Presentation
-    * to get all stored Verifiable Credentials
+   * to get a list of all wallets
+   * to retrieve one wallet by its identifier
+   * to validate a Verifiable Credential
+   * to validate a Verifiable Presentation
+   * to get all stored Verifiable Credentials
+3. Role `update_wallets` for the following actions:
 
-1. Role `update_wallets` for the following actions:
-    * to store Verifiable Credential
-    * to set the wallet DID to public on chain
-    * to issue a Verifiable Credential 
-    * to issue a Verifiable Presentation
-    * to add, update and delete service endpoint of DIDs
-    * to trigger the update of Business Partner Data of all existing wallets
-  
-1. Role `delete_wallets` to remove a wallet
+   * to store Verifiable Credential
+   * to issue a Verifiable Credential
+   * to issue a Verifiable Presentation
+4. Role `update_wallet`:
 
-1. Role `view_wallet` requires the BPN of Caller and it can be used:
-    * to get the Wallet of the related BPN
-    * to get stored Verifiable Credentials of the related BPN
-    * to validate any Verifiable Presentation
+   * to remove a Verifiable Credential
+   * to store a Verifiable Credential
+   * to issue a Verifiable Credential
+   * to issue a Verifiable Presentation
+5. Role `view_wallet` requires the BPN of Caller and it can be used:
 
-1. Role `update_wallet` requires the BPN of Caller and it can be used:
-    * to issue Verifiable Credentials (The BPN of issuer will be checked)
-    * to issue Verifiable Presentations (The BPN of holder will be checked)
-    * to store Verifiable Credentials (The BPN of holder will be checked)
-    * to trigger Business Partner Data update for its own BPN
+   * to get the Wallet of the related BPN
+   * to get stored Verifiable Credentials of the related BPN
+   * to validate any Verifiable Credential
+   * to validate any Verifiable Presentation
+6. Role `manage_app` used to change the log level of the application at runtime. Check Logging in the application section for more
+   details
 
-Additionally a Token mapper can to be created under *Clients* &gt;
+Overview by Endpoint
+
+| Artefact                                        | CRUD   | HTTP Verb/ Request | Endpoint                              | Roles                                                    | Constraints                                                      |
+| ----------------------------------------------- | ------ | ------------------ | ------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------------- |
+| **Wallets**                               | Read   | GET                | /api/wallets                          | **view_wallets**                                   |                                                                  |
+| **Wallets**                               | Create | POST               | /api/wallets                          | **add_wallets**                                    | **1 BPN : 1 WALLET**(PER ONE [1] BPN ONLY ONE [1] WALLET!) |
+| **Wallets**                               | Create | POST               | /api/wallets/{identifier}/credentials | **update_wallets** <br />OR**update_wallet** |                                                                  |
+| **Wallets**                               | Read   | GET                | /api/wallets/{identifier}             | **view_wallets**OR<br />**view_wallet**      |                                                                  |
+| **Verifiable Presentations - Generation** | Create | POST               | /api/presentation                     | **update_wallets**OR<br />**update_wallet**  |                                                                  |
+| **Verifiable Presentations - Validation** | Create | POST               | /api/presentations/validation         | **view_wallets**OR<br />**view_wallet**      |                                                                  |
+| **Verifiable Credential - Holder**        | Read   | GET                | /api/credentials                      | **view_wallets**OR<br />**view_wallet**      |                                                                  |
+| **Verifiable Credential - Holder**        | Create | POST               | /api/credentials                      | **update_wallet**OR<br />**update_wallet**   |                                                                  |
+| **Verifiable Credential - Holder**        | Delete | DELETE             | /api/credentials                      | **update_wallet**                                  |                                                                  |
+| **Verfiable Credential - Validation**     | Create | POST               | /api/credentials/validation           | **view_wallets**OR<br />**view_wallet**      |                                                                  |
+| **Verfiable Credential - Issuer**         | Read   | GET                | /api/credentials/issuer               | **view_wallets**                                   |                                                                  |
+| **Verfiable Credential - Issuer**         | Create | POST               | /api/credentials/issuer               | **update_wallets**                                 |                                                                  |
+| **Verfiable Credential - Issuer**         | Create | POST               | /api/credentials/issuer/membership    | **update_wallets**                                 |                                                                  |
+| **Verfiable Credential - Issuer**         | Create | POST               | /api/credentials/issuer/framework     | **update_wallets**                                 |                                                                  |
+| **Verfiable Credential - Issuer**         | Create | POST               | /api/credentials/issuer/distmantler   | **update_wallets**                                 |                                                                  |
+| **DIDDocument**                           | Read   | GET                | /{bpn}/did.json                       | N/A                                                      |                                                                  |
+| **DIDDocument**                           | Read   | GET                | /api/didDocuments/{identifier}        | N/A                                                      |                                                                  |
+
+
+
+Additionally a Token mapper can be created under *Clients* &gt;
 *ManagedIdentityWallets* &gt; *Mappers* &gt; *create* with the following
-configuration (using as example `BPNL000000001`):
+configuration (using as an example `BPNL000000001`):
 
-| Key                 | Value                     |
-|---------------------|---------------------------|
-| Name                | StaticBPN                 |
-| Mapper Type         | Hardcoded claim           |
-| Token Claim Name    | BPN                       |
-| Claim value         | BPNL000000001             |
-| Claim JSON Type     | String                    |
-| Add to ID token     | OFF                       |
-| Add to access token | ON                        |
-| Add to userinfo     | OFF                       |
-| includeInAccessTokenResponse.label | ON         | 
+| Key                                | Value           |
+| ---------------------------------- | --------------- |
+| Name                               | StaticBPN       |
+| Mapper Type                        | Hardcoded claim |
+| Token Claim Name                   | BPN             |
+| Claim value                        | BPNL000000001   |
+| Claim JSON Type                    | String          |
+| Add to ID token                    | OFF             |
+| Add to access token                | ON              |
+| Add to userinfo                    | OFF             |
+| includeInAccessTokenResponse.label | ON              |
 
 If you receive an error message, that the client secret is not valid, please go into
 keycloak admin and within *Clients > Credentials* recreate the secret.
 
-## Manual Database Configuration
+## Development Setup
 
-Within the development setup databases are initially prepared as needed, in the
-cloud deployment that is done via init containers. The MIW and the ACA-Py
-service are setting up the required tables on the first start. For MIW this is
-done within the `src/main/.../managedidentitywallets/plugins/Persistence.kt` database
-setup:
+### Prerequisites
 
-```
-SchemaUtils.createMissingTablesAndColumns(Wallets, VerifiableCredentials, SchedulerTasks)
-```
+To simplify the dev environment, [Taskfile](https://taskfile.dev) is used as a task executor. You have to install it first.
 
-The tables of the **Revocation Service** are added manually to the database using the
-SQL script at `./dev-asset/dev-containers/revocation/V1.0.0__Create_DB.sql`
+> **IMPORTANT**: Before executing any of th tasks, you have to choose your flow (_local_ or _docker_). _local_ is
+> default.
+> To change that, you need to edit the variable **ENV** in the _Taskfile.yaml_. (see below)
 
-## Local docker deployment
+After that, run `task check-prereqs` to see, if any other required tool is installed or missing. If something is
+missing, a link to the install docs is provided.
 
-First step is to create the distribution of the application:
+Now, you have to adjust the _env_ files (located in _dev-assets/env-files_). To do that, copy every file to the same
+directory, but without ".dist" at the end.
 
-```bash
-./gradlew installDist
-```
+Description of the env files:
 
-Next step is to build and tag the Docker image, replacing the
-`<VERSION>` with the app version:
+- **env.local**: Setup everything to get ready for flow "local". You need to fill in the passwords. Everything else can
+  remain as it is.
+- **env.docker**: Setup everything to get ready for flow "docker". You need to fill in the passwords. Everything else
+  can remain as it is.
 
-```
-docker build -t managed-identity-wallets:<VERSION> .
-```
+> **IMPORTANT**: When you are using MacOS and the MIW docker container won't start up (stuck somewhere or doesn't start
+> at all), you can enable the docker-desktop feature "Use Rosetta for x86/amd64 emulation on Apple Silicon" in your Docker
+> settings (under "features in development"). This should fix the issue.
 
-Finally, start the image (please make sure that there are no quotes around the
-values in the env file):
+In both env files (env.local and env.docker) you need to set _GITHUB_USERNAME_ and _GITHUB_TOKEN_ in order to be able to
+build the add,
+because the SSI lib is stored in a private repo (you also need the proper rights to access the repo).
+The access token need to have `read:packages` access. (ref: https://github.com/settings/tokens/new)
 
-```
-docker run --env-file .env.docker -p 8080:8080 managed-identity-wallets:<VERSION>
-```
+And change the _COMPOSE_COMMAND_ variable to either _docker-compose_ or _docker compose_. It depends on docker compose
+version you are using: V1 or V2
 
-## Deployment on Kubernetes
+Note: _SKIP_GRADLE_TASKS_PARAM_ is used to pass parameters to the build process of the MIW jar. Currently, it skips the
+tests and code coverage, but speeds up the build time.
+If you want to activate it, just comment it out
+like `SKIP_GRADLE_TASKS_PARAM="" #"-x jacocoTestCoverageVerification -x test"`
 
-*Work in progress*
+After every execution (either _local_ or _docker_ flow), run the matching "stop" task (
+e.g.: `task docker:start-app` -> `task docker:stop-app`)
 
-1. Create a namespace
+When you just run `task` without parameters, you will see all tasks available.
 
-    Using as example `managed-identity-wallets`:
+### local
 
-    ```
-    kubectl create namespace managed-identity-wallets
-    ```
+1. Run `task docker:start-middleware` and wait until it shows "(main) Running the server in development mode. DO NOT use this configuration in production." in the terminal
+2. Run `task app:build` to build the MIW application
+3. Run [ManagedIdentityWalletsApplication.java](src/main/java/org/eclipse/tractusx/managedidentitywallets/ManagedIdentityWalletsApplication.java) via IDE and use the local.env file to populate environment vars (e.g. EnvFile plugin for IntelliJ)
+4. Run `task app:get-token` and copy the token (including "BEARER" prefix) (Mac users have the token already in their clipboard :) )
+5. Open API doc on http://localhost:8000 (or what port you configured in the _env.local_ file)
+6. Click on Authorize on swagger UI and on the dialog paste the token into the "value" input
+7. Click on "Authorize" and "close"
+8. MIW is up and running
 
-1. Create relevant secrets
+### docker
 
-    Altogether four secrets are needed
-    * managed-identity-wallets-secrets
-    * managed-identity-wallets-acapy-secrets    
-    * postgres-acapy-secret-config
-    * postgres-managed-identity-wallets-secret-config
-
-    Create these with following commands, after replacing the placeholders:
-
-    ```
-    kubectl -n managed-identity-wallets create secret generic managed-identity-wallets-secrets \
-      --from-literal=miw-db-jdbc-url='jdbc:postgresql://<placeholder>:5432/<database name>?user=<database user>&password=<<database password>>' \
-      --from-literal=miw-auth-client-id='ManagedIdentityWallets' \
-      --from-literal=miw-auth-client-secret='<placeholder>' \
-      --from-literal=bpdm-auth-client-id='<placeholder>' \
-      --from-literal=bpdm-auth-client-secret='<placeholder>'
-
-    kubectl -n managed-identity-wallets create secret generic managed-identity-wallets-acapy-secrets \
-      --from-literal=acapy-endorser-wallet-key='<placeholder>' \
-      --from-literal=acapy-endorser-agent-wallet-seed='<placeholder>' \
-      --from-literal=acapy-endorser-jwt-secret='<placeholder>' \
-      --from-literal=acapy-endorser-db-account='postgres' \
-      --from-literal=acapy-endorser-db-password='<placeholder>' \
-      --from-literal=acapy-endorser-db-admin='postgres' \
-      --from-literal=acapy-endorser-db-admin-password='<placeholder>' \
-      --from-literal=acapy-endorser-admin-api-key='<placeholder>' \
-      --from-literal=acapy-mt-wallet-key='<placeholder>' \
-      --from-literal=acapy-mt-agent-wallet-seed='<placeholder>' \
-      --from-literal=acapy-mt-jwt-secret='<placeholder>' \
-      --from-literal=acapy-mt-db-account='postgres' \
-      --from-literal=acapy-mt-db-password='<placeholder>' \
-      --from-literal=acapy-mt-db-admin='postgres' \
-      --from-literal=acapy-mt-db-admin-password='<placeholder>' \
-      --from-literal=acapy-mt-admin-api-key='<placeholder>'
-
-    kubectl -n managed-identity-wallets create secret generic postgres-acapy-secret-config \
-    --from-literal=password='<placeholder>' \
-    --from-literal=postgres-password='<placeholder>' \
-    --from-literal=user='postgres'
-
-    kubectl -n managed-identity-wallets create secret generic postgres-managed-identity-wallets-secret-config \
-    --from-literal=password='<placeholder>' \
-    --from-literal=postgres-password='<placeholder>' \
-    --from-literal=user='postgres'
-    ```
-
-1.  If the Indy ledger is write-restricted, the DID of the used seed
-    must be registered manually before starting ACA-Py.
-
-1. Install a new deployment via helm
-
-    Run following command to use the base values as well as the predefined values for local deployment:
-
-    ```
-    helm install managed-identity-wallets ./charts/managed-identity-wallets/ -n managed-identity-wallets -f ./charts/managed-identity-wallets/values.yaml -f ./charts/managed-identity-wallets/values-local.yaml
-    ```
-
-4. Expose via loadbalancer
-
-    ```
-    kubectl -n managed-identity-wallets apply -f dev-assets/kube-local-lb.yaml
-    ```
-
-5. To check the current deployment and version run `helm list -n <namespace-placeholder>`. Example output:
-
-    ```
-    NAME         	NAMESPACE        	REVISION	UPDATED                                	STATUS  	CHART                  	                APP VERSION
-    miw       	ingress-miw     	1       	2022-02-24 08:51:39.864930557 +0000 UTC	deployed	managed-identity-wallets-0.1.0	0.0.5      
-    ```
+1. Run `task docker:start-app` and wait until it shows " Started ManagedIdentityWalletsApplication in ... seconds"
+2. Run `task app:get-token` and copy the token (including "BEARER" prefix) (Mac users have the token already in their clipboard :) )
+3. Open API doc on http://localhost:8000 (or what port you configured in the _env.local_ file)
+4. Click on Authorize on swagger UI and on the dialog paste the token into the "value" input
+5. Click on "Authorize" and "close"
+6. MIW is up and running
 
 # End Users
 
 See OpenAPI documentation, which is automatically created from
-the source and available on each deployment at the `/docs` endpoint
-(e.g. locally at http://localhost:8080/docs). An export of the JSON
-document can be also found in [docs/openapi_v310.json](docs/openapi_v310.json).
+the source and available on each deployment at the `/docs/api-docs/docs` endpoint
+(e.g. locally at http://localhost:8087/docs/api-docs/docs). An export of the JSON
+document can be also found in [docs/openapi_v001.json](docs/openapi_v001.json).
 
-# Further Guides
-
-In this section there are advanced cases (e.g. building your own ACA-Py image)
-described.
-
-## Preparation of ACA-Py Docker Image <a id= "acapyDockerImage"></a>
-
-ACA-Py can be used via the official image at `bcgovimages/aries-cloudagent:py36-1.16-1_0.7.5`
-or build your own image following the steps:
-* clone the repository `git clone https://github.com/hyperledger/aries-cloudagent-python.git`
-* navigate to the repository `cd aries-cloudagent-python`
-* currently tested with version `0.7.5`
-* run `git checkout 0.7.5`
-* run `docker build -t acapy:0.7.5 -f ./docker/Dockerfile.run .`
-* change the used image for `local_base_acapy` and `local_mt_acapy` in `dev-assets/dev-containers/docker-compose.yml`
-
-## Integrate with Indy Ledger
-
-In Indy ledger `Write Access` is usually restricted to endorsers or higher roles. Therefore, the DID and its verkey must be registered
-manually before starting ACA-Py.
-
-The [Indy CLI](https://hyperledger-indy.readthedocs.io/projects/sdk/en/latest/docs/design/001-cli/README.html)
-in Docker using the [docker-file](https://github.com/hyperledger/indy-sdk/blob/main/cli/cli.dockerfile)
-can be used to generate a new DID from a given seed. However, it does not show the
-complete `VerKey`, check this [Issue](https://github.com/hyperledger/indy-sdk/issues/2553). 
-Therefore, the easiest way to generate a DID is currently to start ACA-Py with a given seed.
-
-  * Navigate to `./dev-assets/generate-did-from-seed`
-  * Generate a random seed that has 32 characters. If the use of an offline secure secret/password
-    generator is not possible, then these guidelines must be followed:
-    * No repeat of characters or strings
-    * No patterns or use of dictionary words
-    * The use of uppercase and lowercase letters - as well as numbers and allowed symbols
-    * No personal preferences like names or phone numbers
-  * Set the seed as an enviroment variable e.g. `export SEED=312931k4h15989pqwpou129412i214dk`
-  * Run the script generateDidFromSeed script with `./generateDidFromSeed.sh` which starts the
-    ACA-Py container and shows the printout of the `DID` and `VerKey` from its logs in the console
-    like the following
-    ```
-    2022-08-12 08:08:13,888 indy.did DEBUG get_my_did_with_meta: <<< res: '{"did":"HW2eFhr3KcZw5JcRW45KNc","verkey":"aEErMofs7DcJT636pocN2RiEHgTLoF4Mpj6heFXwtb3q","tempVerkey":null,"metadata":null}'
-    ```
-  * If the script did not stop the container, the command `docker compose down -v` can stop and delete it manually
-  * Register the DID and verkey with role endorser. This step depends on the used Indy ledger and the defined roles. As an example: On `GreenLight Dev Ledger` the DID and verkey can be registered using the ledger explorer on `http://dev.greenlight.bcovrin.vonx.io/` > `Register from DID`
- 
-## Testing GitHub actions locally <a id= "testingGitHubActionsLocally"></a>
-
-Using [act](https://github.com/nektos/act) it is possible to test GitHub actions
-locally. To run it needs a secrets file, which could be derived on `.env.example`,
-see the section above.
-
-```
-act --secret-file .env
-```
-
-## Test Coverage
+# Test Coverage
 
 Jacoco is used to generate the coverage report. The report generation
 and the coverage verification are automatically executed after tests.
@@ -434,45 +201,121 @@ The generated HTML report can be found under `jacoco-report/html/`
 To generate the report run the command
 
 ```
-./gradlew jacocoTestReport
+task app:test-report
 ```
 
 To check the coverage run the command
 
 ```
-./gradlew jacocoTestCoverageVerification
+task app:coverage
 ```
 
-Currently the minimum is 80%
+Currently, the minimum is 80% coverage.
 
-Files to be excluded from the coverage calculation can be set in
-`gradle.properties` using a comma-separated list of files or directories
-with possible wildcards as the value for the property `coverage_excludes`.
-The files in `models` and `entities` should be excluded as long as they
-don't have any logic. The services that are mocked in unit tests must be
-excluded. Also their interfaces need to be excluded because they have a
-`companion object` that is used to create those services. Files like
-`Application.kt` which are tested or simulated indirectly for example
-using `withTestApplication` should also be excluded.
+# Common issues and solutions during local setup
 
-## Kotlin Documentation
+#### 1. Can not build with test cases
 
-To generate the Kotlin documentation and java-docs using `dokka` run
+Test cases are written using the Spring Boot integration test frameworks. These test frameworks start the Spring Boot
+test context, which allows us to perform integration testing. In our tests, we utilize the Testcontainers
+library (https://java.testcontainers.org/) for managing Docker containers. Specifically, we use Testcontainers to start
+PostgreSQL and Keycloak Docker containers locally.
 
+Before running the tests, please ensure that you have Docker runtime installed and that you have the necessary
+permissions to run containers.
+
+Alternative, you can skip test during the build with `` ./gradlew clean build -x test``
+
+#### 2. Database migration related issue
+
+We have implemented database migration using Liquibase (https://www.liquibase.org/). Liquibase allows us to manage
+database schema changes effectively.
+
+In case you encounter any database-related issues, you can resolve them by following these steps:
+
+1. Delete all tables from the database.
+2. Restart the application.
+3. Upon restart, the application will recreate the database schema from scratch.
+
+This process ensures that any issues with the database schema are resolved by recreating it in a fresh state.
+
+# Environment Variables `<a id= "environmentVariables"></a>`
+
+| name                            | description                                                                                  | default value                                                                                                                                       |
+| ------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| APPLICATION_PORT                | port number of application                                                                   | 8080                                                                                                                                                |
+| APPLICATION_ENVIRONMENT         | Environment of the application ie. local, dev, int and prod                                  | local                                                                                                                                               |
+| DB_HOST                         | Database host                                                                                | localhost                                                                                                                                           |
+| DB_PORT                         | Port of database                                                                             | 5432                                                                                                                                                |
+| DB_NAME                         | Database name                                                                                | miw                                                                                                                                                 |
+| USE_SSL                         | Whether SSL is enabled in database server                                                    | false                                                                                                                                               |
+| DB_USER_NAME                    | Database username                                                                            |                                                                                                                                                     |
+| DB_PASSWORD                     | Database password                                                                            |                                                                                                                                                     |
+| DB_POOL_SIZE                    | Max number of database connection acquired by application                                    | 10                                                                                                                                                  |
+| KEYCLOAK_MIW_PUBLIC_CLIENT      | Only needed if we want enable login with keyalock in swagger                                 | miw_public                                                                                                                                          |
+| MANAGEMENT_PORT                 | Spring actuator port                                                                         | 8090                                                                                                                                                |
+| MIW_HOST_NAME                   | Application host name, this will be used in creation of did ie. did:web:MIW_HOST_NAME:BPN    | localhost                                                                                                                                           |
+| ENCRYPTION_KEY                  | encryption key used to encrypt and decrypt private and public key of wallet                  |                                                                                                                                                     |
+| AUTHORITY_WALLET_BPN            | base wallet BPN number                                                                       | BPNL000000000000                                                                                                                                    |
+| AUTHORITY_WALLET_NAME           | Base wallet name                                                                             | Catena-X                                                                                                                                            |
+| AUTHORITY_WALLET_DID            | Base wallet web did                                                                          | web:did:host:BPNL000000000000                                                                                                                       |
+| VC_SCHEMA_LINK                  | Comma separated list of VC schema URL                                                        | https://www.w3.org/2018/credentials/v1, https://catenax-ng.github.io/product-core-schemas/businessPartnerData.json                                  |
+| VC_EXPIRY_DATE                  | Expiry date of VC (dd-MM-yyyy ie. 01-01-2025 expiry date will be 2024-12-31T18:30:00Z in VC) | 01-01-2025                                                                                                                                          |
+| KEYCLOAK_REALM                  | Realm name of keycloak                                                                       | miw_test                                                                                                                                            |
+| KEYCLOAK_CLIENT_ID              | Keycloak private client id                                                                   |                                                                                                                                                     |
+| AUTH_SERVER_URL                 | Keycloak server url                                                                          |                                                                                                                                                     |
+| SUPPORTED_FRAMEWORK_VC_TYPES    | Supported framework VC, provide values ie type1=value1,type2=value2                          | cx-behavior-twin=Behavior Twin,cx-pcf=PCF,cx-quality=Quality,cx-resiliency=Resiliency,cx-sustainability=Sustainability,cx-traceability=ID_3.0_Trace |
+| ENFORCE_HTTPS_IN_DID_RESOLUTION | Enforce https during web did resolution                                                      | true                                                                                                                                                |
+| CONTRACT_TEMPLATES_URL          | Contract templates URL used in summary VC                                                    | https://public.catena-x.org/contracts/                                                                                                              |
+| APP_LOG_LEVEL                   | Log level of application                                                                     | INFO                                                                                                                                                |
+|                                 |                                                                                              |                                                                                                                                                     |
+
+# Technical Debts and Known issue
+
+1. Keys are stored in database in encrypted format, need to store keys in more secure place ie. Vault
+2. Policies can be validated dynamically as per
+   request while validating VP and
+   VC. [Check this for more details](https://docs.walt.id/v/ssikit/concepts/verification-policies)
+
+# Logging in application
+
+Log level in application can be set using environment variable ``APP_LOG_LEVEL``. Possible values
+are ``OFF, ERROR, WARN, INFO, DEBUG, TRACE`` and default value set to ``INFO``
+
+### Change log level at runtime using Spring actuator
+
+We can use ``/actuator/loggers`` API endpoint of actuator for log related things. This end point can be accessible with
+role ``manage_app``. We can add this role to authority wallet client using keycloak as below:
+
+![manage_app.png](docs%2Fmanage_app.png)
+
+1. API to get current log settings
+
+```agsl
+curl --location 'http://localhost:8090/actuator/loggers' \
+--header 'Authorization: Bearer access_token'
 ```
-./gradlew dokkaHtml
-./gradlew dokkaJavadoc
+
+2. Change log level at runtime
+
+```agsl
+
+curl --location 'http://localhost:8090/actuator/loggers/{java package name}' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer access_token' \
+--data '{"configuredLevel":"INFO"}'
+
+i.e.
+
+curl --location 'http://localhost:8090/actuator/loggers/org.eclipse.tractusx.managedidentitywallets' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer access_token' \
+--data '{"configuredLevel":"INFO"}'
 ```
 
-The generated files can be found under `./build/dokka/html/index.html` and `build/dokka/javadoc/index.html`
+## Reference of external lib
 
-Note: Currently, only the Interfaces and their methods are documented.
-
-## Helm Documentation
-The `./charts/README.md` is autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
-
-To regenerate the README.md after updating `values.yaml` or `Chart.yaml` run
-
-```
-helm-docs --sort-values-order file
-```
+1. https://www.testcontainers.org/modules/databases/postgres/
+2. https://github.com/dasniko/testcontainers-keycloak
+3. https://github.com/smartSenseSolutions/smartsense-java-commons
+4. https://github.com/catenax-ng/product-lab-ssi
