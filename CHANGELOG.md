@@ -1,58 +1,93 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+<!-- insertion marker -->
+## Unreleased
 
-### Fixed
-- Security issues regarding container images executed as root user are now executed as non-root user 
+<small>[Compare with latest](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.7.9...HEAD)</small>
 
-## [3.3.2] - 2023-02-24
-### Fixed
-- Configurable log level settings with default to INFO
-- Configurable timeouts for HTTP client calls with lower default value
+### Features
 
-## [3.3.1] - 2023-02-23
-### Fixed
-- Fix blocking issue upon status list creation
+- adds content of 'README.md' from restartet 'Managed-Identity-Wallet' ([4d42acd](https://github.com/catenax-ng/tx-managed-identity-wallets/commit/4d42acd98dd0bb9415714fb9df1d02928466daf6) by Mathias Knoop).
 
-## [3.3.0] - 2023-02-14
-- Remove unused UI
-- Fix credential status description in OpenApi
+### Bug Fixes
 
-## [3.2.0] - 2023-02-13
-- Add an allowlist for requested connections based on the DID of the requester
+- add new line for legibility. ([9cd13ce](https://github.com/catenax-ng/tx-managed-identity-wallets/commit/9cd13ce020f63f5975f249766ebe8584663f03f9) by Mathias Knoop).
 
-## [3.1.1] - 2023-01-27
-- Add Kotlin docs to the interfaces
+<!-- insertion marker -->
+## [managed-identity-wallets-0.7.9](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.7.9) - 2023-05-30
 
-## [3.1.0] - 2023-01-26
-- Fix regex bug in utility method
-- Rename enviroment variables and secrets
-- Set verkey as optional in the verify credentials and presentation method
-- Re-enable BPDM scheduler
-- Make the values in OpenAPI configurable
+<small>[Compare with managed-identity-wallets-0.7.7](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.7.7...managed-identity-wallets-0.7.9)</small>
 
-## [3.0.0] - 2023-01-09
-- Use separate AcaPy instances for Base Endorser wallet and multi-tenant company wallets
-- Support endorsement by Base wallet for setting did-communication service endpoints for company wallet
-- Support acceptance and reception of connection requests and credential issuance from external issuers by company wallets
+### Features
 
-## [2.2.0] - 2022-12-20
+- add new test config for dev environment ([b420443](https://github.com/catenax-ng/tx-managed-identity-wallets/commit/b420443dff0a6ac5a7fcdb19f013231a416676d8) by Peter Motzko).
+- update helm chart version ([e0711fc](https://github.com/catenax-ng/tx-managed-identity-wallets/commit/e0711fc4172a65cbfbb21eb7be65ee375131e539) by Peter Motzko).
+- remove hardcoded values from templates (namespace and name) ([f3e9caf](https://github.com/catenax-ng/tx-managed-identity-wallets/commit/f3e9caf19d9cfbd6f4b748cbc50e36c158cd3d85) by Peter Motzko).
+- adds directory '.java-version' to '.gitignore' to prevent it to be versioned and tracked and overridden ([589f746](https://github.com/catenax-ng/tx-managed-identity-wallets/commit/589f746f77d6ecb4e76a5225bf025d30c679fae3) by Mathias Knoop).
 
-### Changed
-- update the supported AcaPy version to 0.7.5
-- update the Business Partner data integration from external BPDM service
-- other improvements and additional tests
+### Bug Fixes
 
-## [2.1.0] - 2022-10-06
+- adjust CHANGELOG.md to enable release v.3.3.3 ([f2f2961](https://github.com/catenax-ng/tx-managed-identity-wallets/commit/f2f29618699d242d0a619708748f3fbac068601f) by Mathias Knoop).
 
-### Added
-- Wallet handling via CRUD
-- Verifiable Credentials and Verifiable Presentation handling via CRUD
-- Revocation of Verifiable Credentials
-- DID document and Service Endpoint handling via CRUD
-- Business Partner data integration from external BPDM service and Verifiable Credentials
-- Copyright, dependency and notice files according to Eclipse project requirements
+## [managed-identity-wallets-0.7.7](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.7.7) - 2023-05-16
+
+<small>[Compare with managed-identity-wallets-0.7.8](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.7.8...managed-identity-wallets-0.7.7)</small>
+
+### Bug Fixes
+
+- adjust version numbers to be able to release app version 3.3.3 ([1cfbff0](https://github.com/catenax-ng/tx-managed-identity-wallets/commit/1cfbff02a05309f759c1a5174396a1efcefbce35) by Mathias Knoop).
+
+## [managed-identity-wallets-0.7.8](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.7.8) - 2023-05-16
+
+<small>[Compare with managed-identity-wallets-0.7.5](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.7.5...managed-identity-wallets-0.7.8)</small>
+
+### Bug Fixes
+
+- adjust docker file to run containers as non-root user 'postgres'. ([eff5975](https://github.com/catenax-ng/tx-managed-identity-wallets/commit/eff5975e220a15c6cd26f4113be23fc2696b4787) by Mathias Knoop).
+- adjust docker files to run containers as non-root users ([3d86647](https://github.com/catenax-ng/tx-managed-identity-wallets/commit/3d866474b4c33b72aa3388ea94321a8726ca853a) by Mathias Knoop).
+
+## [managed-identity-wallets-0.7.5](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.7.5) - 2023-02-28
+
+<small>[Compare with managed-identity-wallets-0.7.2](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.7.2...managed-identity-wallets-0.7.5)</small>
+
+## [managed-identity-wallets-0.7.2](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.7.2) - 2023-02-24
+
+<small>[Compare with managed-identity-wallets-0.7.1](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.7.1...managed-identity-wallets-0.7.2)</small>
+
+## [managed-identity-wallets-0.7.1](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.7.1) - 2023-02-23
+
+<small>[Compare with managed-identity-wallets-0.7.0](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.7.0...managed-identity-wallets-0.7.1)</small>
+
+## [managed-identity-wallets-0.7.0](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.7.0) - 2023-02-13
+
+<small>[Compare with managed-identity-wallets-0.6.9](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.6.9...managed-identity-wallets-0.7.0)</small>
+
+## [managed-identity-wallets-0.6.9](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.6.9) - 2023-02-09
+
+<small>[Compare with managed-identity-wallets-0.6.8](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.6.8...managed-identity-wallets-0.6.9)</small>
+
+## [managed-identity-wallets-0.6.8](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.6.8) - 2023-02-06
+
+<small>[Compare with managed-identity-wallets-0.6.7](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.6.7...managed-identity-wallets-0.6.8)</small>
+
+## [managed-identity-wallets-0.6.7](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.6.7) - 2023-02-02
+
+<small>[Compare with managed-identity-wallets-0.6.6](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.6.6...managed-identity-wallets-0.6.7)</small>
+
+## [managed-identity-wallets-0.6.6](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.6.6) - 2023-02-02
+
+<small>[Compare with managed-identity-wallets-0.6.3](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.6.3...managed-identity-wallets-0.6.6)</small>
+
+## [managed-identity-wallets-0.6.3](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.6.3) - 2023-01-26
+
+<small>[Compare with managed-identity-wallets-0.6.0](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/managed-identity-wallets-0.6.0...managed-identity-wallets-0.6.3)</small>
+
+## [managed-identity-wallets-0.6.0](https://github.com/catenax-ng/tx-managed-identity-wallets/releases/tag/managed-identity-wallets-0.6.0) - 2023-01-17
+
+<small>[Compare with first commit](https://github.com/catenax-ng/tx-managed-identity-wallets/compare/060340e0f43f6bd2616afc1d3589c12bb1a5ffe6...managed-identity-wallets-0.6.0)</small>
+
